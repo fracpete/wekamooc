@@ -16,7 +16,6 @@
 
 import os
 import weka.core.jvm as jvm
-import wekaexamples.helper as helper
 from weka.core.converters import Loader
 from weka.core.classes import Random
 from weka.classifiers import Classifier, Evaluation
@@ -36,10 +35,10 @@ classifiers = [
 ]
 
 # load diabetes
-data = data_dir + os.sep + "diabetes.arff"
-print("\nLoading dataset: " + data + "\n")
-loader = Loader("weka.core.converters.ArffLoader")
-data = loader.load_file(data)
+fname = data_dir + os.sep + "diabetes.arff"
+print("\nLoading dataset: " + fname + "\n")
+loader = Loader(classname="weka.core.converters.ArffLoader")
+data = loader.load_file(fname)
 data.set_class_index(data.num_attributes() - 1)
 
 # random split on data
@@ -50,10 +49,10 @@ for classifier in classifiers:
     print(classifier + ": %0.0f" % evl.percent_correct())
 
 # load supermarket
-data = data_dir + os.sep + "supermarket.arff"
-print("\nLoading dataset: " + data + "\n")
-loader = Loader("weka.core.converters.ArffLoader")
-data = loader.load_file(data)
+fname = data_dir + os.sep + "supermarket.arff"
+print("\nLoading dataset: " + fname + "\n")
+loader = Loader(classname="weka.core.converters.ArffLoader")
+data = loader.load_file(fname)
 data.set_class_index(data.num_attributes() - 1)
 
 # random split on data

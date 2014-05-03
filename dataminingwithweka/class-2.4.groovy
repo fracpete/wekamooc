@@ -39,9 +39,9 @@ classifiers = [
 percent = 66.0
 
 // load diabetes
-data = data_dir + File.separator + "diabetes.arff"
-printf("\nLoading dataset: " + data + "\n")
-data = DataSource.read(data)
+fname = data_dir + File.separator + "diabetes.arff"
+printf("\nLoading dataset: " + fname + "\n")
+data = DataSource.read(fname)
 data.setClassIndex(data.numAttributes() - 1)
 
 // random split on data
@@ -61,9 +61,9 @@ for (classifier in classifiers) {
 }
 
 // load supermarket
-data = data_dir + File.separator + "supermarket.arff"
-printf("\nLoading dataset: " + data + "\n")
-data = DataSource.read(data)
+fname = data_dir + File.separator + "supermarket.arff"
+printf("\nLoading dataset: " + fname + "\n")
+data = DataSource.read(fname)
 data.setClassIndex(data.numAttributes() - 1)
 
 // random split on data

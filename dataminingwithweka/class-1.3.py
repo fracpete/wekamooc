@@ -16,10 +16,7 @@
 
 import os
 import weka.core.jvm as jvm
-import wekaexamples.helper as helper
 from weka.core.converters import Loader
-from weka.core.classes import Random
-from weka.classifiers import Classifier, Evaluation
 
 jvm.start()
 
@@ -28,10 +25,10 @@ jvm.start()
 data_dir = "/some/where/data"
 
 # load weather.nominal
-data = data_dir + os.sep + "weather.nominal.arff"
-print("\nLoading dataset: " + data + "\n")
-loader = Loader("weka.core.converters.ArffLoader")
-data = loader.load_file(data)
+fname = data_dir + os.sep + "weather.nominal.arff"
+print("\nLoading dataset: " + fname + "\n")
+loader = Loader(classname="weka.core.converters.ArffLoader")
+data = loader.load_file(fname)
 
 # print data
 print(data)
@@ -54,10 +51,10 @@ for i in xrange(data.num_attributes()):
     print(str(i+1) + ". " + att.get_name() + ": " + att.get_type_str(True) + " [" + str(extra) + "]")
 
 # load glass
-data = data_dir + os.sep + "glass.arff"
-print("\nLoading dataset: " + data + "\n")
-loader = Loader("weka.core.converters.ArffLoader")
-data = loader.load_file(data)
+fname = data_dir + os.sep + "glass.arff"
+print("\nLoading dataset: " + fname + "\n")
+loader = Loader(classname="weka.core.converters.ArffLoader")
+data = loader.load_file(fname)
 
 # print data
 print(data)
