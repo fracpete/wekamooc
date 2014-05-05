@@ -27,9 +27,8 @@ jvm.start()
 # wherever your datasets are located
 data_dir = "/some/where/data"
 
-# load segment-challenge
+# load diabetes
 loader = Loader(classname="weka.core.converters.ArffLoader")
-
 fname = data_dir + os.sep + "diabetes.arff"
 print("\nLoading dataset: " + fname + "\n")
 data = loader.load_file(fname)
