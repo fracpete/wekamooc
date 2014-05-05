@@ -39,7 +39,8 @@ train.set_class_index(train.num_attributes() - 1)
 perc = []
 for i in xrange(1, 11):
     evl = Evaluation(train)
-    evl.evaluate_train_test_split(Classifier("weka.classifiers.trees.J48"), train, 90.0, Random(i))
+    evl.evaluate_train_test_split(
+        Classifier(classname="weka.classifiers.trees.J48"), train, 90.0, Random(i))
     perc.append(round(evl.percent_correct(), 1))
     print("Accuracy with seed %i: %0.1f%%" % (i, evl.percent_correct()))
 
