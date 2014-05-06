@@ -14,6 +14,10 @@
 # Data Mining with Weka - Class 2.5
 # Copyright (C) 2014 Fracpete (fracpete at gmail dot com)
 
+# TODO
+# wherever your datasets are located
+data_dir = "/some/where/data"
+
 import os
 import weka.core.jvm as jvm
 from weka.core.converters import Loader
@@ -22,10 +26,6 @@ from weka.classifiers import Classifier, Evaluation
 from weka.filters import Filter
 
 jvm.start()
-
-# TODO
-# wherever your datasets are located
-data_dir = "/some/where/data"
 
 # load diabetes
 loader = Loader(classname="weka.core.converters.ArffLoader")

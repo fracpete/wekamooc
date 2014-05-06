@@ -18,16 +18,16 @@
  * Copyright (C) 2014 Fracpete (fracpete at gmail dot com)
  */
 
+// TODO
+// wherever your datasets are located
+data_dir = "/some/where/data"
+
 import java.io.File
 import java.util.Random
 import weka.classifiers.Classifier
 import weka.classifiers.Evaluation
 import weka.core.converters.ConverterUtils.DataSource
 import weka.core.Instances
-
-// TODO
-// wherever your datasets are located
-data_dir = "/some/where/data"
 
 classifiers = [
     new weka.classifiers.rules.ZeroR(),

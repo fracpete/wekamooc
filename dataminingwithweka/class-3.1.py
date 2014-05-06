@@ -14,6 +14,10 @@
 # Data Mining with Weka - Class 3.1
 # Copyright (C) 2014 Fracpete (fracpete at gmail dot com)
 
+# TODO
+# wherever your datasets are located
+data_dir = "/some/where/data"
+
 import os
 import numpy
 import weka.core.jvm as jvm
@@ -23,10 +27,6 @@ from weka.classifiers import Classifier, Evaluation
 from weka.filters import Filter
 
 jvm.start()
-
-# TODO
-# wherever your datasets are located
-data_dir = "/some/where/data"
 
 # load weather.nominal
 loader = Loader(classname="weka.core.converters.ArffLoader")

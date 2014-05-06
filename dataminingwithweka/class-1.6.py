@@ -14,6 +14,10 @@
 # Data Mining with Weka - Class 1.6
 # Copyright (C) 2014 Fracpete (fracpete at gmail dot com)
 
+# TODO
+# wherever your datasets are located
+data_dir = "/some/where/data"
+
 import os
 import weka.core.jvm as jvm
 from weka.core.converters import Loader
@@ -23,10 +27,6 @@ import weka.plot.dataset as pld
 import weka.plot.classifiers as plc
 
 jvm.start()
-
-# TODO
-# wherever your datasets are located
-data_dir = "/some/where/data"
 
 # load iris
 fname = data_dir + os.sep + "iris.arff"

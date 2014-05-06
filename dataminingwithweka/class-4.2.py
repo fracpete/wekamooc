@@ -14,6 +14,10 @@
 # Data Mining with Weka - Class 4.2
 # Copyright (C) 2014 Fracpete (fracpete at gmail dot com)
 
+# TODO
+# wherever your datasets are located
+data_dir = "/some/where/data"
+
 import os
 import weka.core.jvm as jvm
 from weka.core.converters import Loader
@@ -22,11 +26,6 @@ from weka.classifiers import Classifier, Evaluation
 import weka.plot.graph as plg
 
 jvm.start()
-
-# TODO
-# wherever your datasets are located
-#data_dir = "/some/where/data"
-data_dir = "/home/fracpete/development/projects/wekamooc/dataminingwithweka/data/"
 
 # load cpu
 loader = Loader(classname="weka.core.converters.ArffLoader")

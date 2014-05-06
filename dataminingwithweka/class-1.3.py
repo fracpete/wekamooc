@@ -14,15 +14,15 @@
 # Data Mining with Weka - Class 1.3
 # Copyright (C) 2014 Fracpete (fracpete at gmail dot com)
 
+# TODO
+# wherever your datasets are located
+data_dir = "/some/where/data"
+
 import os
 import weka.core.jvm as jvm
 from weka.core.converters import Loader
 
 jvm.start()
-
-# TODO
-# wherever your datasets are located
-data_dir = "/some/where/data"
 
 # load weather.nominal
 fname = data_dir + os.sep + "weather.nominal.arff"

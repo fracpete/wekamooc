@@ -14,6 +14,10 @@
 # Data Mining with Weka - Class 2.4
 # Copyright (C) 2014 Fracpete (fracpete at gmail dot com)
 
+# TODO
+# wherever your datasets are located
+data_dir = "/some/where/data"
+
 import os
 import weka.core.jvm as jvm
 from weka.core.converters import Loader
@@ -21,10 +25,6 @@ from weka.core.classes import Random
 from weka.classifiers import Classifier, Evaluation
 
 jvm.start()
-
-# TODO
-# wherever your datasets are located
-data_dir = "/some/where/data"
 
 classifiers = [
     "weka.classifiers.rules.ZeroR",
