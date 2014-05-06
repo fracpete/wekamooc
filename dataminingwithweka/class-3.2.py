@@ -11,7 +11,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Data Mining with Weka - Class 3.1
+# Data Mining with Weka - Class 3.2
 # Copyright (C) 2014 Fracpete (fracpete at gmail dot com)
 
 import os
