@@ -16,8 +16,7 @@
 
 # TODO
 # wherever your datasets are located
-#data_dir = "/some/where/data"
-data_dir = "/home/fracpete/development/projects/wekamooc/dataminingwithweka/data/"
+data_dir = "/some/where/data"
 
 import os
 import weka.core.jvm as jvm
@@ -25,7 +24,6 @@ from weka.core.converters import Loader
 from weka.core.classes import Random
 from weka.classifiers import Classifier, Evaluation, PredictionOutput
 from weka.filters import Filter
-import weka.plot.graph as plg
 
 jvm.start()
 
