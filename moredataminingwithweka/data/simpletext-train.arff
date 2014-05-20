@@ -1,0 +1,13 @@
+@relation 'training text'
+
+@attribute text string
+@attribute type {yes, no}
+
+@data
+'The price of crude oil has increased significantly', yes 
+'Demand of crude oil outstrips supply', yes 
+'Some people do not like the flavor of olive oil', no
+'The food was very oily', no
+'Crude oil is in short supply', yes
+'Use a bit of cooking oil in the frying pan', no
+
