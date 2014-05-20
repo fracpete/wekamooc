@@ -46,7 +46,7 @@ pout = PredictionOutput(classname="weka.classifiers.evaluation.output.prediction
 evl = Evaluation(filtered)
 evl.crossvalidate_model(cls, filtered, 10, Random(1), pout)
 print("10-fold cross-validation:\n" + evl.to_summary())
-print("Predictions:\n\n" + pout.get_buffer_content())
+print("Predictions:\n\n" + str(pout))
 cls.build_classifier(filtered)
 print("Model:\n\n" + str(cls))
 
@@ -73,7 +73,7 @@ twoatt.set_class_index(twoatt.get_attribute_by_name("class").get_index())
 # cross-validate default OneR and output model
 cls = Classifier(classname="weka.classifiers.rules.OneR")
 evl = Evaluation(twoatt)
-evl.crossvalidate_model(cls, twoatt, 10, Random(1), pout)
+evl.crossvalidate_model(cls, twoatt, 10, Random(1))
 print("10-fold cross-validation (default OneR):\n" + evl.to_summary())
 cls.build_classifier(twoatt)
 print("Model (default OneR):\n\n" + str(cls))
