@@ -43,7 +43,7 @@ for equal in ["", "-F"]:
             filtered = fltr.filter(data)
         else:
             filtered = data
-        cls = Classifier("weka.classifiers.trees.J48")
+        cls = Classifier(classname="weka.classifiers.trees.J48")
         # cross-validate
         evl = Evaluation(filtered)
         evl.crossvalidate_model(cls, filtered, 10, Random(1))
