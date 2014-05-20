@@ -28,7 +28,7 @@ from weka.classifiers import Classifier
 jvm.start()
 
 # setup cross-validation experiment and run it
-datasets = [data_dir + "/segment-challenge.arff"]
+datasets = [data_dir + os.sep + "segment-challenge.arff"]
 classifiers = [Classifier(classname="weka.classifiers.trees.J48")]
 outfile = tempfile.gettempdir() + os.sep + "results-cv.arff"
 exp = SimpleCrossValidationExperiment(
