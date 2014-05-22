@@ -46,7 +46,7 @@ for dataset in datasets:
     data.set_class_index(data.num_attributes() - 1)
 
     for classifier in classifiers:
-        # cross-validate NaiveBayes
+        # cross-validate classifier
         cls = Classifier(classname=classifier)
         evl = Evaluation(data)
         evl.crossvalidate_model(cls, data, 10, Random(1))
