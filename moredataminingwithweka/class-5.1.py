@@ -19,7 +19,6 @@
 data_dir = "/some/where/data"
 
 import os
-from numpy import array
 import weka.core.jvm as jvm
 from weka.core.converters import Loader
 from weka.core.classes import Random
