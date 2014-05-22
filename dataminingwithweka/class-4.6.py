@@ -31,6 +31,9 @@ jvm.start(packages=True)
 if not packages.is_installed("stackingC"):
     print("Installing stackingC...")
     packages.install_package("stackingC")
+    jvm.stop()
+    print("Please restart")
+    exit()
 
 # load glass
 loader = Loader(classname="weka.core.converters.ArffLoader")

@@ -20,7 +20,6 @@ data_dir = "/some/where/data"
 
 import os
 import weka.core.jvm as jvm
-import weka.core.packages as packages
 from weka.core.converters import Loader
 from weka.clusterers import Clusterer, ClusterEvaluation
 from weka.filters import Filter

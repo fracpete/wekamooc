@@ -30,10 +30,10 @@ jvm.start(packages=True)
 
 pkg = "XMeans"
 if not packages.is_installed(pkg):
-    if not packages.install_package(pkg):
-        raise Exception("Failed to install " + pkg)
-    else:
-        print("Installed " + pkg + ", please restart!")
+    packages.install_package(pkg):
+    jvm.stop()
+    print("Please restart")
+    exit()
 
 # load weather.numeric
 fname = data_dir + os.sep + "weather.numeric.arff"
