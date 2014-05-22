@@ -19,6 +19,7 @@
 data_dir = "/some/where/data"
 
 import os
+import tempfile
 import weka.core.jvm as jvm
 import weka.core.converters as converters
 from weka.core.converters import Loader
@@ -70,7 +71,7 @@ classifiers = [
     Classifier(classname="weka.classifiers.meta.AdaBoostM1"),
     # handles only 2-class problems: Classifier(classname="weka.classifiers.functions.VotedPerceptron")
 ]
-outfile = "results-cv.arff"   # store results for later analysis
+outfile = tempfile.gettempdir() + os.sep + "results-cv.arff"   # store results for later analysis
 exp = SimpleCrossValidationExperiment(
     classification=True,
     runs=10,
