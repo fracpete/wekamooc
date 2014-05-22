@@ -23,7 +23,6 @@ import weka.core.jvm as jvm
 from weka.core.converters import Loader
 from weka.core.classes import Random
 from weka.classifiers import Classifier, Evaluation, CostMatrix, PredictionOutput
-import weka.classifiers as classifiers
 
 jvm.start()
 
