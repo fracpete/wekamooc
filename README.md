@@ -13,15 +13,16 @@ On Linux or Mac OSX, you can do this in the terminal as follows:
 
 * just for the current command:
 
-  `WEKAMOOC_DATA=/home/me/somewhere/data python class-1.3.py`
-
-  `WEKAMOOC_DATA=/home/me/somewhere/data python class-1.4.py`
+  <pre>
+  WEKAMOOC_DATA=/home/me/somewhere/data python class-1.3.py
+  WEKAMOOC_DATA=/home/me/somewhere/data python class-1.4.py
+  </pre>
 
 * for the current shell session:
 
-  `export WEKAMOOC_DATA=/home/me/somewhere/data`
-
-  `python class-1.3.py`
-
-  `python class-1.4.py`
+  <pre>
+  export WEKAMOOC_DATA=/home/me/somewhere/data
+  python class-1.3.py
+  python class-1.4.py
+  </pre>
 
