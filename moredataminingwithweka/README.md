@@ -21,8 +21,8 @@ Please be aware that the MOOC is based on Weka 3.6.11,
 whereas this library uses the 3.7.x branch (developer version).
 
 
-Grooy (.groovy)
-===============
+Groovy (.groovy)
+================
 
 In order to run these scripts, you must download Groovy to start with:
 

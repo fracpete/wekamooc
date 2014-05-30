@@ -18,9 +18,11 @@
  * Copyright (C) 2014 Fracpete (fracpete at gmail dot com)
  */
 
-// TODO
-// wherever your datasets are located
-data_dir = "/some/where/data"
+# Use the WEKAMOOC_DATA environment variable to set the location 
+# for the datasets
+data_dir = System.getenv("WEKAMOOC_DATA")
+if (data_dir == null)
+  data_dir = "./data"
 
 import java.io.File
 import java.util.Random

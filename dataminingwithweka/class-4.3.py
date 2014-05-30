@@ -14,9 +14,12 @@
 # Data Mining with Weka - Class 4.3
 # Copyright (C) 2014 Fracpete (fracpete at gmail dot com)
 
-# TODO
-# wherever your datasets are located
-data_dir = "/some/where/data"
+# Use the WEKAMOOC_DATA environment variable to set the location 
+# for the datasets
+import os
+data_dir = os.environ.get("WEKAMOOC_DATA")
+if data_dir is None:
+  data_dir = "." + os.sep + "data"
 
 import os
 import weka.core.jvm as jvm
