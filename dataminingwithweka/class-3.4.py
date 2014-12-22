@@ -39,6 +39,6 @@ data.class_index = data.num_attributes - 1
 cls = Classifier(classname="weka.classifiers.trees.J48")
 cls.build_classifier(data)
 print("Model:\n\n" + str(cls))
-plg.plot_dot_graph(cls.graph())
+plg.plot_dot_graph(cls.graph)
 
 jvm.stop()

@@ -93,10 +93,10 @@ for setup in setups:
     print(aseval.to_commandline())
     print(assearch.to_commandline())
     attsel = AttributeSelection()
-    attsel.set_evaluator(aseval)
-    attsel.set_search(assearch)
+    attsel.evaluator(aseval)
+    attsel.search(assearch)
     attsel.select_attributes(data)
-    print(attsel.to_results_string())
+    print(attsel.results_string)
 
 # cross-validation
 aseval = ASEvaluation(classname="weka.attributeSelection.WrapperSubsetEval",
@@ -107,10 +107,10 @@ print("\n--> Attribute selection (cross-validation)\n")
 print(aseval.to_commandline())
 print(assearch.to_commandline())
 attsel = AttributeSelection()
-attsel.set_evaluator(aseval)
-attsel.set_search(assearch)
-attsel.set_crossvalidation(True)
+attsel.evaluator(aseval)
+attsel.search(assearch)
+attsel.crossvalidation(True)
 attsel.select_attributes(data)
-print(attsel.to_results_string())
+print(attsel.results_string)
 
 jvm.stop()

@@ -40,6 +40,6 @@ cls = Classifier("weka.classifiers.trees.J48")
 cls.build_classifier(data)
 
 # plot graph
-plg.plot_dot_graph(cls.graph())
+plg.plot_dot_graph(cls.graph)
 
 jvm.stop()

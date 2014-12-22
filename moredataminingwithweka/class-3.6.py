@@ -47,7 +47,7 @@ cl.build_clusterer(filtered)
 evl = ClusterEvaluation()
 evl.set_model(cl)
 evl.test_model(filtered)
-print(evl.cluster_results())
+print(evl.cluster_results)
 plc.plot_cluster_assignments(evl, data, atts=[], inst_no=True, wait=True)
 
 # use AddCluster filter
@@ -66,6 +66,6 @@ cl.build_clusterer(filtered)  # WITHOUT class attribute
 evl = ClusterEvaluation()
 evl.set_model(cl)
 evl.test_model(data)  # WITH class attribute
-print(evl.cluster_results())
+print(evl.cluster_results)
 
 jvm.stop()

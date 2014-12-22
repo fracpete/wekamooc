@@ -51,7 +51,7 @@ evl = Evaluation(filtered)
 evl.test_model(cls, filtered)
 print(evl.summary())
 print(str(cls))
-plg.plot_dot_graph(cls.graph())
+plg.plot_dot_graph(cls.graph)
 
 # 2. filtered classifier
 fname = data_dir + os.sep + "simpletext-test.arff"

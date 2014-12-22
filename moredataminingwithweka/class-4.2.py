@@ -55,8 +55,8 @@ for classifier in classifiers:
     assearch = ASSearch(classname="weka.attributeSelection.BestFirst",
                         options=[])
     attsel = AttributeSelection()
-    attsel.set_evaluator(aseval)
-    attsel.set_search(assearch)
+    attsel.evaluator(aseval)
+    attsel.search(assearch)
     attsel.select_attributes(data)
     reduced = attsel.reduce_dimensionality(data)
 

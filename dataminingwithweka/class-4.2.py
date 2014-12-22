@@ -53,6 +53,6 @@ evl.crossvalidate_model(cls, data, 10, Random(1))
 print("10-fold cross-validation:\n" + evl.summary())
 cls.build_classifier(data)
 print("Model:\n\n" + str(cls))
-plg.plot_dot_graph(cls.graph())
+plg.plot_dot_graph(cls.graph)
 
 jvm.stop()

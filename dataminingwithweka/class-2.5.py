@@ -57,14 +57,14 @@ for i in xrange(1, 11):
     cls.build_classifier(train)
     evl.test_model(cls, test)
 
-print("Simulated CV accuracy: %0.1f%%" % (evl.percent_correct))
+print("Simulated CV accuracy: %0.1f%%" % evl.percent_correct)
 
 # perform actual cross-validation
 evl = Evaluation(data)
 cls = Classifier(classname="weka.classifiers.trees.J48")
 evl.crossvalidate_model(cls, data, 10, Random(1))
 
-print("Actual CV accuracy: %0.1f%%" % (evl.percent_correct))
+print("Actual CV accuracy: %0.1f%%" % evl.percent_correct)
 
 # deploy
 print("Build model on full dataset:\n")

@@ -48,7 +48,7 @@ for classifier in classifiers:
 
 # replace 'outlook' in first 4 'no' instances with 'missing'
 modified = Instances.copy_instances(data)
-count    = 0
+count = 0
 for i in xrange(modified.num_instances):
     if modified.get_instance(i).get_string_value(modified.class_index) == "no":
         count += 1

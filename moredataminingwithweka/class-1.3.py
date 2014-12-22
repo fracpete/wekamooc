@@ -112,4 +112,3 @@ print(tester.header(comparison_col))
 print(tester.multi_resultset_full(0, comparison_col))
 
 jvm.stop()
-

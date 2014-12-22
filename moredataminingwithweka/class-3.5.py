@@ -58,7 +58,7 @@ for seed in seeds:
     evl = ClusterEvaluation()
     evl.set_model(cl)
     evl.test_model(data)
-    print(evl.cluster_results())
+    print(evl.cluster_results)
 
 # build XMeans
 print("\n--> XMeans\n")
@@ -70,7 +70,7 @@ cl.build_clusterer(filtered)
 evl = ClusterEvaluation()
 evl.set_model(cl)
 evl.test_model(filtered)
-print(evl.cluster_results())
+print(evl.cluster_results)
 
 # build EM
 print("\n--> EM\n")
@@ -79,7 +79,7 @@ cl.build_clusterer(data)
 evl = ClusterEvaluation()
 evl.set_model(cl)
 evl.test_model(data)
-print(evl.cluster_results())
+print(evl.cluster_results)
 
 # build Cobweb
 print("\n--> Cobweb\n")
@@ -88,7 +88,7 @@ cl.build_clusterer(data)
 evl = ClusterEvaluation()
 evl.set_model(cl)
 evl.test_model(data)
-print(evl.cluster_results())
-plg.plot_dot_graph(cl.graph())
+print(evl.cluster_results)
+plg.plot_dot_graph(cl.graph)
 
 jvm.stop()

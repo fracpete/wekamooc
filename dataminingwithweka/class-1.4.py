@@ -46,7 +46,7 @@ print(evl.matrix())
 
 # build and plot model
 cls.build_classifier(data)
-plg.plot_dot_graph(cls.graph())
+plg.plot_dot_graph(cls.graph)
 
 # cross-validate unpruned J48 with larger leaf size
 print("\nUnpruned J48 (minNumObj=15)")
@@ -58,7 +58,7 @@ print(evl.matrix())
 
 # build and plot model
 cls.build_classifier(data)
-plg.plot_dot_graph(cls.graph())
+plg.plot_dot_graph(cls.graph)
 
 jvm.stop()
 

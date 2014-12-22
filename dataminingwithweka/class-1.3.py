@@ -79,4 +79,3 @@ for i in xrange(data.num_attributes):
     print(str(i+1) + ". " + att.name + ": " + att.type_str(True) + " [" + str(extra) + "]")
 
 jvm.stop()
-
