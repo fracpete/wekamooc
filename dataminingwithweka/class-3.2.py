@@ -33,7 +33,7 @@ loader = Loader(classname="weka.core.converters.ArffLoader")
 fname = data_dir + os.sep + "weather.nominal.arff"
 print("\nLoading dataset: " + fname + "\n")
 data = loader.load_file(fname)
-data.class_index = data.num_attributes - 1
+data.class_is_last()
 
 # perform 10-fold cross-validation
 cls = Classifier(classname="weka.classifiers.rules.OneR")
@@ -60,7 +60,7 @@ loader = Loader(classname="weka.core.converters.ArffLoader")
 fname = data_dir + os.sep + "diabetes.arff"
 print("\nLoading dataset: " + fname + "\n")
 data = loader.load_file(fname)
-data.class_index = data.num_attributes - 1
+data.class_is_last()
 
 cls = Classifier(classname="weka.classifiers.rules.ZeroR")
 evl = Evaluation(data)

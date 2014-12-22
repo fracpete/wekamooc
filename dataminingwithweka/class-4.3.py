@@ -40,7 +40,7 @@ data = loader.load_file(fname)
 fltr = Filter("weka.filters.unsupervised.attribute.NominalToBinary")
 fltr.inputformat(data)
 filtered = fltr.filter(data)
-filtered.class_index = data.num_attributes - 1
+filtered.class_is_last()
 
 # cross-validate LinearRegression on filtered data, display model
 cls = Classifier(classname="weka.classifiers.functions.LinearRegression")

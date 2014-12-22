@@ -60,7 +60,7 @@ print(addcl)
 
 # classes-to-clusters evaluation
 print("\n--> Classes to clusters\n")
-data.class_index = data.num_attributes - 1
+data.class_is_last()
 cl = Clusterer(classname="weka.clusterers.SimpleKMeans", options=["-N", "3"])
 cl.build_clusterer(filtered)  # WITHOUT class attribute
 evl = ClusterEvaluation()

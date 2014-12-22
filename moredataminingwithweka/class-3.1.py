@@ -41,7 +41,7 @@ fname = data_dir + os.sep + "weather.nominal.arff"
 print("\nLoading dataset: " + fname + "\n")
 loader = Loader(classname="weka.core.converters.ArffLoader")
 data = loader.load_file(fname)
-data.class_index = data.num_attributes - 1
+data.class_is_last()
 
 # cross-validate classifiers
 classifiers = [

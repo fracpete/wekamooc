@@ -34,12 +34,12 @@ loader = Loader(classname="weka.core.converters.ArffLoader")
 fname = data_dir + os.sep + "segment-challenge.arff"
 print("\nLoading dataset: " + fname + "\n")
 train = loader.load_file(fname)
-train.class_index = train.num_attributes - 1
+train.class_is_last()
 
 fname = data_dir + os.sep + "segment-test.arff"
 print("\nLoading dataset: " + fname + "\n")
 test = loader.load_file(fname)
-test.class_index = train.num_attributes - 1
+test.class_is_last()
 
 # build J48
 cls = Classifier(classname="weka.classifiers.trees.J48")

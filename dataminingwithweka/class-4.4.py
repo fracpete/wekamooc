@@ -34,7 +34,7 @@ loader = Loader(classname="weka.core.converters.ArffLoader")
 fname = data_dir + os.sep + "diabetes.arff"
 print("\nLoading dataset: " + fname + "\n")
 data = loader.load_file(fname)
-data.class_index = data.num_attributes - 1
+data.class_is_last()
 
 for classifier in ["weka.classifiers.bayes.NaiveBayes", "weka.classifiers.rules.ZeroR", "weka.classifiers.trees.J48"]:
     # train/test split 90% using classifier

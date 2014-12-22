@@ -34,14 +34,14 @@ fname = data_dir + os.sep + "simpletext-train.arff"
 print("\nLoading dataset: " + fname + "\n")
 loader = Loader(classname="weka.core.converters.ArffLoader")
 data = loader.load_file(fname)
-data.class_index = data.num_attributes - 1
+data.class_is_last()
 
 # 1a filter data
 print("Filtering data...")
 fltr = Filter("weka.filters.unsupervised.attribute.StringToWordVector")
 fltr.inputformat(data)
 filtered = fltr.filter(data)
-filtered.class_index = 0
+filtered.class_is_first()
 
 # 1b build classifier
 print("Building/evaluating classifier...")
@@ -58,7 +58,7 @@ fname = data_dir + os.sep + "simpletext-test.arff"
 print("\nLoading dataset: " + fname + "\n")
 loader = Loader(classname="weka.core.converters.ArffLoader")
 test = loader.load_file(fname)
-test.class_index = test.num_attributes - 1
+test.class_is_last()
 print("Building/evaluating filtered classifier...")
 cls = FilteredClassifier()
 cls.classifier = Classifier(classname="weka.classifiers.trees.J48")
@@ -76,14 +76,14 @@ fname = data_dir + os.sep + "ReutersCorn-train.arff"
 print("\nLoading dataset: " + fname + "\n")
 loader = Loader(classname="weka.core.converters.ArffLoader")
 data = loader.load_file(fname)
-data.class_index = data.num_attributes - 1
+data.class_is_last()
 
 # load ReutersCorn-test
 fname = data_dir + os.sep + "ReutersCorn-test.arff"
 print("\nLoading dataset: " + fname + "\n")
 loader = Loader(classname="weka.core.converters.ArffLoader")
 test = loader.load_file(fname)
-test.class_index = test.num_attributes - 1
+test.class_is_last()
 
 # build/evaluate classifier
 cls = FilteredClassifier()

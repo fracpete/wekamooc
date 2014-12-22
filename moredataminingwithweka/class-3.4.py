@@ -32,7 +32,7 @@ fname = data_dir + os.sep + "weather.nominal.arff"
 print("\nLoading dataset: " + fname + "\n")
 loader = Loader(classname="weka.core.converters.ArffLoader")
 data = loader.load_file(fname)
-data.class_index = data.num_attributes - 1
+data.class_is_last()
 
 # build Apriori (output as many rules as possible that min support of 0.01)
 print("\n--> Output many weather rules\n")
@@ -51,7 +51,7 @@ fname = data_dir + os.sep + "supermarket.arff"
 print("\nLoading dataset: " + fname + "\n")
 loader = Loader(classname="weka.core.converters.ArffLoader")
 data = loader.load_file(fname)
-data.class_index = data.num_attributes - 1
+data.class_is_last()
 
 # build Apriori (default options, outputting itemsets)
 print("\n--> Market basket analysis\n")

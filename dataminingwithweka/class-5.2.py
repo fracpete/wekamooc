@@ -34,7 +34,7 @@ loader = Loader(classname="weka.core.converters.ArffLoader")
 fname = data_dir + os.sep + "weather.nominal.arff"
 print("\nLoading dataset: " + fname + "\n")
 data = loader.load_file(fname)
-data.class_index = data.num_attributes - 1
+data.class_is_last()
 
 # define classifiers
 classifiers = ["weka.classifiers.rules.OneR", "weka.classifiers.trees.J48"]

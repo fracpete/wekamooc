@@ -42,7 +42,7 @@ loader = Loader(classname="weka.core.converters.ArffLoader")
 fname = data_dir + os.sep + "glass.arff"
 print("\nLoading dataset: " + fname + "\n")
 data = loader.load_file(fname)
-data.class_index = data.num_attributes - 1
+data.class_is_last()
 
 # compare several meta-classifiers with J48
 for classifier in [("weka.classifiers.trees.J48", []), ("weka.classifiers.meta.Bagging", []),

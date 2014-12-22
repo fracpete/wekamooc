@@ -47,7 +47,7 @@ fname = data_dir + os.sep + "diabetes.arff"
 print("\nLoading dataset: " + fname + "\n")
 loader = Loader(classname="weka.core.converters.ArffLoader")
 data = loader.load_file(fname)
-data.class_index = data.num_attributes - 1
+data.class_is_last()
 
 # J48
 cls = Classifier(classname="weka.classifiers.trees.J48")
@@ -95,7 +95,7 @@ fname = data_dir + os.sep + "credit-g.arff"
 print("\nLoading dataset: " + fname + "\n")
 loader = Loader(classname="weka.core.converters.ArffLoader")
 data = loader.load_file(fname)
-data.class_index = data.num_attributes - 1
+data.class_is_last()
 
 # NaiveBayes
 cls = Classifier(classname="weka.classifiers.bayes.NaiveBayes")
