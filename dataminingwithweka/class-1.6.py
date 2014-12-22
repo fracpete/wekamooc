@@ -19,9 +19,8 @@
 import os
 data_dir = os.environ.get("WEKAMOOC_DATA")
 if data_dir is None:
-  data_dir = "." + os.sep + "data"
+    data_dir = "." + os.sep + "data"
 
-import os
 import weka.core.jvm as jvm
 from weka.core.converters import Loader
 from weka.classifiers import Classifier, Evaluation
@@ -36,19 +35,19 @@ fname = data_dir + os.sep + "iris.arff"
 print("\nLoading dataset: " + fname + "\n")
 loader = Loader(classname="weka.core.converters.ArffLoader")
 data = loader.load_file(fname)
-data.set_class_index(data.num_attributes() - 1)
+data.class_index = data.num_attributes - 1
 
 # plot
 pld.scatter_plot(
-    data, data.get_attribute_by_name("petalwidth").get_index(),
-    data.get_attribute_by_name("petallength").get_index(),
+    data, data.attribute_by_name("petalwidth").index,
+    data.attribute_by_name("petallength").index,
     wait=False)
 
 # add classifier errors to dataset
 addcls = Filter(
     classname="weka.filters.supervised.attribute.AddClassification",
     options=["-W", "weka.classifiers.trees.J48", "-classification", "-error"])
-addcls.set_inputformat(data)
+addcls.inputformat(data)
 filtered = addcls.filter(data)
 print(filtered)
 
@@ -59,7 +58,7 @@ evl = Evaluation(data)
 evl.test_model(cls, data)
 
 # plot classifier errors
-plc.plot_classifier_errors(evl.predictions(), wait=True)
+plc.plot_classifier_errors(evl.predictions, wait=True)
 
 jvm.stop()
 

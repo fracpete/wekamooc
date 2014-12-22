@@ -19,9 +19,8 @@
 import os
 data_dir = os.environ.get("WEKAMOOC_DATA")
 if data_dir is None:
-  data_dir = "." + os.sep + "data"
+    data_dir = "." + os.sep + "data"
 
-import os
 import numpy
 import weka.core.jvm as jvm
 from weka.core.converters import Loader
@@ -35,14 +34,14 @@ loader = Loader(classname="weka.core.converters.ArffLoader")
 fname = data_dir + os.sep + "diabetes.arff"
 print("\nLoading dataset: " + fname + "\n")
 data = loader.load_file(fname)
-data.set_class_index(data.num_attributes() - 1)
+data.class_index = data.num_attributes - 1
 
 for classifier in ["weka.classifiers.bayes.NaiveBayes", "weka.classifiers.rules.ZeroR", "weka.classifiers.trees.J48"]:
     # train/test split 90% using classifier
     cls = Classifier(classname=classifier)
     evl = Evaluation(data)
     evl.evaluate_train_test_split(cls, data, 90.0, Random(1))
-    print("\n" + classifier + " train/test split (90%):\n" + evl.to_summary())
+    print("\n" + classifier + " train/test split (90%):\n" + evl.summary())
     cls.build_classifier(data)
     print(classifier + " model:\n\n" + str(cls))
 
@@ -55,7 +54,7 @@ for classifier in [
         cls = Classifier(classname=classifier)
         evl = Evaluation(data)
         evl.crossvalidate_model(cls, data, 10, Random(i))
-        accuracy.append(evl.percent_correct())
+        accuracy.append(evl.percent_correct)
     nacc = numpy.array(accuracy)
     print("%s: %0.2f +/-%0.2f" % (classifier, numpy.mean(nacc), numpy.std(nacc)))
 

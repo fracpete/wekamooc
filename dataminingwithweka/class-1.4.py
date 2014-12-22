@@ -19,9 +19,8 @@
 import os
 data_dir = os.environ.get("WEKAMOOC_DATA")
 if data_dir is None:
-  data_dir = "." + os.sep + "data"
+    data_dir = "." + os.sep + "data"
 
-import os
 import weka.core.jvm as jvm
 from weka.core.converters import Loader
 from weka.core.classes import Random
@@ -35,15 +34,15 @@ fname = data_dir + os.sep + "glass.arff"
 print("\nLoading dataset: " + fname + "\n")
 loader = Loader(classname="weka.core.converters.ArffLoader")
 data = loader.load_file(fname)
-data.set_class_index(data.num_attributes() - 1)
+data.class_index = data.num_attributes - 1
 
 # cross-validate default J48
 print("\nDefault J48")
 cls = Classifier(classname="weka.classifiers.trees.J48")
 evl = Evaluation(data)
 evl.crossvalidate_model(cls, data, 10, Random(1))
-print(evl.to_summary())
-print(evl.to_matrix())
+print(evl.summary())
+print(evl.matrix())
 
 # build and plot model
 cls.build_classifier(data)
@@ -54,8 +53,8 @@ print("\nUnpruned J48 (minNumObj=15)")
 cls = Classifier(classname="weka.classifiers.trees.J48", options=["-U", "-M", "15"])
 evl = Evaluation(data)
 evl.crossvalidate_model(cls, data, 10, Random(1))
-print(evl.to_summary())
-print(evl.to_matrix())
+print(evl.summary())
+print(evl.matrix())
 
 # build and plot model
 cls.build_classifier(data)

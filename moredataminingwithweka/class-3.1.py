@@ -19,9 +19,8 @@
 import os
 data_dir = os.environ.get("WEKAMOOC_DATA")
 if data_dir is None:
-  data_dir = "." + os.sep + "data"
+    data_dir = "." + os.sep + "data"
 
-import os
 import weka.core.jvm as jvm
 import weka.core.packages as packages
 from weka.core.converters import Loader
@@ -32,9 +31,9 @@ jvm.start(packages=True)
 
 pkg = "simpleEducationalLearningSchemes"
 if not packages.is_installed(pkg):
-    packages.install_package(pkg):
+    packages.install_package(pkg)
     jvm.stop()
-    print("Please restart")
+    print("Installed package, please restart")
     exit()
 
 # load weather.nominal
@@ -42,7 +41,7 @@ fname = data_dir + os.sep + "weather.nominal.arff"
 print("\nLoading dataset: " + fname + "\n")
 loader = Loader(classname="weka.core.converters.ArffLoader")
 data = loader.load_file(fname)
-data.set_class_index(data.num_attributes() - 1)
+data.class_index = data.num_attributes - 1
 
 # cross-validate classifiers
 classifiers = [
@@ -57,6 +56,6 @@ for classifier in classifiers:
     evl.crossvalidate_model(cls, data, 10, Random(1))
     cls.build_classifier(data)
     print(cls)
-    print(evl.to_summary())
+    print(evl.summary())
 
 jvm.stop()

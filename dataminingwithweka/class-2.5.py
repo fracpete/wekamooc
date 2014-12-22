@@ -19,9 +19,8 @@
 import os
 data_dir = os.environ.get("WEKAMOOC_DATA")
 if data_dir is None:
-  data_dir = "." + os.sep + "data"
+    data_dir = "." + os.sep + "data"
 
-import os
 import weka.core.jvm as jvm
 from weka.core.converters import Loader
 from weka.core.classes import Random
@@ -35,7 +34,7 @@ loader = Loader(classname="weka.core.converters.ArffLoader")
 fname = data_dir + os.sep + "diabetes.arff"
 print("\nLoading dataset: " + fname + "\n")
 data = loader.load_file(fname)
-data.set_class_index(data.num_attributes() - 1)
+data.class_index = data.num_attributes - 1
 
 # simulate the 10 train/test pairs of cross-validation
 evl = Evaluation(data)
@@ -44,28 +43,28 @@ for i in xrange(1, 11):
     remove = Filter(
         classname="weka.filters.supervised.instance.StratifiedRemoveFolds",
         options=["-N", "10", "-F", str(i), "-S", "1", "-V"])
-    remove.set_inputformat(data)
+    remove.inputformat(data)
     train = remove.filter(data)
 
     # create test set
     remove = Filter(
         classname="weka.filters.supervised.instance.StratifiedRemoveFolds",
         options=["-N", "10", "-F", str(i), "-S", "1"])
-    remove.set_inputformat(data)
+    remove.inputformat(data)
     test = remove.filter(data)
 
     cls = Classifier(classname="weka.classifiers.trees.J48")
     cls.build_classifier(train)
     evl.test_model(cls, test)
 
-print("Simulated CV accuracy: %0.1f%%" % (evl.percent_correct()))
+print("Simulated CV accuracy: %0.1f%%" % (evl.percent_correct))
 
 # perform actual cross-validation
 evl = Evaluation(data)
 cls = Classifier(classname="weka.classifiers.trees.J48")
 evl.crossvalidate_model(cls, data, 10, Random(1))
 
-print("Actual CV accuracy: %0.1f%%" % (evl.percent_correct()))
+print("Actual CV accuracy: %0.1f%%" % (evl.percent_correct))
 
 # deploy
 print("Build model on full dataset:\n")

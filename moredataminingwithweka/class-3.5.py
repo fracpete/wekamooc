@@ -19,9 +19,8 @@
 import os
 data_dir = os.environ.get("WEKAMOOC_DATA")
 if data_dir is None:
-  data_dir = "." + os.sep + "data"
+    data_dir = "." + os.sep + "data"
 
-import os
 import weka.core.jvm as jvm
 import weka.core.packages as packages
 from weka.core.converters import Loader
@@ -33,9 +32,9 @@ jvm.start(packages=True)
 
 pkg = "XMeans"
 if not packages.is_installed(pkg):
-    packages.install_package(pkg):
+    packages.install_package(pkg)
     jvm.stop()
-    print("Please restart")
+    print("Installed package, please restart")
     exit()
 
 # load weather.numeric
@@ -54,24 +53,24 @@ for seed in seeds:
     print("\n--> SimpleKMeans - seed " + seedStr + "\n")
     cl = Clusterer("weka.clusterers.SimpleKMeans")
     if seed != -1:
-        cl.set_options(["-S", str(seed)])
+        cl.options = ["-S", str(seed)]
     cl.build_clusterer(data)
     evl = ClusterEvaluation()
     evl.set_model(cl)
     evl.test_model(data)
-    print(evl.get_cluster_results())
+    print(evl.cluster_results())
 
 # build XMeans
 print("\n--> XMeans\n")
 flt = Filter(classname="weka.filters.unsupervised.attribute.RemoveType", options=["-T", "numeric", "-V"])
-flt.set_inputformat(data)
+flt.inputformat(data)
 filtered = flt.filter(data)
 cl = Clusterer(classname="weka.clusterers.XMeans")
 cl.build_clusterer(filtered)
 evl = ClusterEvaluation()
 evl.set_model(cl)
 evl.test_model(filtered)
-print(evl.get_cluster_results())
+print(evl.cluster_results())
 
 # build EM
 print("\n--> EM\n")
@@ -80,7 +79,7 @@ cl.build_clusterer(data)
 evl = ClusterEvaluation()
 evl.set_model(cl)
 evl.test_model(data)
-print(evl.get_cluster_results())
+print(evl.cluster_results())
 
 # build Cobweb
 print("\n--> Cobweb\n")
@@ -89,7 +88,7 @@ cl.build_clusterer(data)
 evl = ClusterEvaluation()
 evl.set_model(cl)
 evl.test_model(data)
-print(evl.get_cluster_results())
+print(evl.cluster_results())
 plg.plot_dot_graph(cl.graph())
 
 jvm.stop()

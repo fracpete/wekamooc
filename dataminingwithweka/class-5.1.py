@@ -19,9 +19,8 @@
 import os
 data_dir = os.environ.get("WEKAMOOC_DATA")
 if data_dir is None:
-  data_dir = "." + os.sep + "data"
+    data_dir = "." + os.sep + "data"
 
-import os
 import weka.core.jvm as jvm
 from weka.core.converters import Loader
 from weka.core.dataset import Instances
@@ -34,46 +33,46 @@ loader = Loader(classname="weka.core.converters.ArffLoader")
 fname = data_dir + os.sep + "iris.arff"
 print("\nLoading dataset: " + fname + "\n")
 data = loader.load_file(fname)
-data.set_class_index(data.num_attributes() - 1)
+data.class_index = data.num_attributes - 1
 
 # AddExpression
 print("Computing area fromm petallength and petalwidth")
 fltr = Filter(classname="weka.filters.unsupervised.attribute.AddExpression", options=["-E", "a3*a4", "-N", "petalarea"])
-fltr.set_inputformat(data)
+fltr.inputformat(data)
 filtered = fltr.filter(data)
 print(filtered)
 
 # Normalize
 print("Normalize numeric attributes")
 fltr = Filter(classname="weka.filters.unsupervised.attribute.Normalize")
-fltr.set_inputformat(data)
+fltr.inputformat(data)
 filtered = fltr.filter(data)
 print("sepallength stats (original)")
-print(data.get_attribute_stats(0).numeric_stats())
+print(data.attribute_stats(0).numeric_stats)
 print("sepallength stats (normalized)")
-print(filtered.get_attribute_stats(0).numeric_stats())
+print(filtered.attribute_stats(0).numeric_stats)
 
 # Standardize
 print("Standardize numeric attributes")
 fltr = Filter(classname="weka.filters.unsupervised.attribute.Standardize")
-fltr.set_inputformat(data)
+fltr.inputformat(data)
 filtered = fltr.filter(data)
 print("sepallength stats (original)")
-print(data.get_attribute_stats(0).numeric_stats())
+print(data.attribute_stats(0).numeric_stats)
 print("sepallength stats (normalized)")
-print(filtered.get_attribute_stats(0).numeric_stats())
+print(filtered.attribute_stats(0).numeric_stats)
 
 # Discretize
 print("Discretize numeric attributes (supervised)")
 fltr = Filter(classname="weka.filters.supervised.attribute.Discretize")
-fltr.set_inputformat(data)
+fltr.inputformat(data)
 filtered = fltr.filter(data)
 print(filtered)
 
 # PCA
 print("Principal components analysis")
 fltr = Filter(classname="weka.filters.unsupervised.attribute.PrincipalComponents")
-fltr.set_inputformat(data)
+fltr.inputformat(data)
 filtered = fltr.filter(data)
 print(filtered)
 
@@ -82,14 +81,14 @@ loader = Loader(classname="weka.core.converters.ArffLoader")
 fname = data_dir + os.sep + "anneal.arff"
 print("\nLoading dataset: " + fname + "\n")
 data = loader.load_file(fname)
-data.set_class_index(data.num_attributes() - 1)
+data.class_index = data.num_attributes - 1
 
 # RemoveUseless
 print("RemoveUseless")
 fltr = Filter(classname="weka.filters.unsupervised.attribute.RemoveUseless")
-fltr.set_inputformat(data)
+fltr.inputformat(data)
 filtered = fltr.filter(data)
-print("Original header (#att=" + str(data.num_attributes()) + "):\n" + str(Instances.template_instances(data)))
-print("Filtered header (#att=" + str(filtered.num_attributes()) + "):\n" + str(Instances.template_instances(filtered)))
+print("Original header (#att=" + str(data.num_attributes) + "):\n" + str(Instances.template_instances(data)))
+print("Filtered header (#att=" + str(filtered.num_attributes) + "):\n" + str(Instances.template_instances(filtered)))
 
 jvm.stop()

@@ -19,9 +19,8 @@
 import os
 data_dir = os.environ.get("WEKAMOOC_DATA")
 if data_dir is None:
-  data_dir = "." + os.sep + "data"
+    data_dir = "." + os.sep + "data"
 
-import os
 import weka.core.jvm as jvm
 from weka.core.converters import Loader, Saver
 from weka.core.dataset import Instances
@@ -41,7 +40,7 @@ print(Instances.template_instances(data))
 # remove attribute no 3
 print("\nRemove attribute no 3")
 fltr = Filter(classname="weka.filters.unsupervised.attribute.Remove", options=["-R", "3"])
-fltr.set_inputformat(data)
+fltr.inputformat(data)
 filtered = fltr.filter(data)
 
 # output header

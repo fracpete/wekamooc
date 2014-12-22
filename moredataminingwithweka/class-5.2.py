@@ -19,9 +19,8 @@
 import os
 data_dir = os.environ.get("WEKAMOOC_DATA")
 if data_dir is None:
-  data_dir = "." + os.sep + "data"
+    data_dir = "." + os.sep + "data"
 
-import os
 import tempfile
 import weka.core.jvm as jvm
 import weka.core.converters as converters
@@ -37,7 +36,7 @@ fname = data_dir + os.sep + "weather.numeric.arff"
 print("\nLoading dataset: " + fname + "\n")
 loader = Loader(classname="weka.core.converters.ArffLoader")
 data = loader.load_file(fname)
-data.set_class_index(data.num_attributes() - 1)
+data.class_index = data.num_attributes - 1
 
 # cross-validate classifiers
 classifiers = [
@@ -51,7 +50,7 @@ for classifier in classifiers:
     cls = Classifier(classname=classifier)
     evl = Evaluation(data)
     evl.crossvalidate_model(cls, data, 10, Random(1))
-    print("%s: %0.0f%%" % (classifier, evl.percent_correct()))
+    print("%s: %0.0f%%" % (classifier, evl.percent_correct))
 
 # configure experiment
 print("This will take some time, so grab a cuppa... And a muffin... And read the paper...")
@@ -89,9 +88,9 @@ loader = converters.loader_for_file(outfile)
 data = loader.load_file(outfile)
 matrix = ResultMatrix(classname="weka.experiment.ResultMatrixPlainText")
 tester = Tester(classname="weka.experiment.PairedCorrectedTTester")
-tester.set_resultmatrix(matrix)
-comparison_col = data.get_attribute_by_name("Percent_correct").get_index()
-tester.set_instances(data)
+tester.resultmatrix = matrix
+comparison_col = data.attribute_by_name("Percent_correct").index
+tester.instances = data
 print(tester.header(comparison_col))
 print(tester.multi_resultset_full(0, comparison_col))
 

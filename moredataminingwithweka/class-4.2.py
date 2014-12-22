@@ -19,9 +19,8 @@
 import os
 data_dir = os.environ.get("WEKAMOOC_DATA")
 if data_dir is None:
-  data_dir = "." + os.sep + "data"
+    data_dir = "." + os.sep + "data"
 
-import os
 import weka.core.jvm as jvm
 from weka.core.converters import Loader
 from weka.core.classes import Random
@@ -35,7 +34,7 @@ fname = data_dir + os.sep + "glass.arff"
 print("\nLoading dataset: " + fname + "\n")
 loader = Loader(classname="weka.core.converters.ArffLoader")
 data = loader.load_file(fname)
-data.set_class_index(data.num_attributes() - 1)
+data.class_index = data.num_attributes - 1
 
 classifiers = [
     "weka.classifiers.trees.J48",
@@ -47,7 +46,7 @@ for classifier in classifiers:
     cls = Classifier(classname=classifier)
     evl = Evaluation(data)
     evl.crossvalidate_model(cls, data, 10, Random(1))
-    print("%s: %0.0f%%" % (classifier, evl.percent_correct()))
+    print("%s: %0.0f%%" % (classifier, evl.percent_correct))
 
 # wrapper
 for classifier in classifiers:
@@ -64,18 +63,18 @@ for classifier in classifiers:
     cls = Classifier(classname=classifier)
     evl = Evaluation(reduced)
     evl.crossvalidate_model(cls, reduced, 10, Random(1))
-    print("%s (reduced): %0.0f%%" % (classifier, evl.percent_correct()))
+    print("%s (reduced): %0.0f%%" % (classifier, evl.percent_correct))
 
 # meta-classifier
 for wrappercls in classifiers:
     for basecls in classifiers:
         meta = SingleClassifierEnhancer(classname="weka.classifiers.meta.AttributeSelectedClassifier")
-        meta.set_options(
+        meta.options = \
             ["-E", "weka.attributeSelection.WrapperSubsetEval -B " + wrappercls,
              "-S", "weka.attributeSelection.BestFirst",
-             "-W", basecls])
+             "-W", basecls]
         evl = Evaluation(data)
         evl.crossvalidate_model(meta, data, 10, Random(1))
-        print("%s/%s: %0.0f%%" % (wrappercls, basecls, evl.percent_correct()))
+        print("%s/%s: %0.0f%%" % (wrappercls, basecls, evl.percent_correct))
 
 jvm.stop()

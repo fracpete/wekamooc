@@ -19,9 +19,8 @@
 import os
 data_dir = os.environ.get("WEKAMOOC_DATA")
 if data_dir is None:
-  data_dir = "." + os.sep + "data"
+    data_dir = "." + os.sep + "data"
 
-import os
 import weka.core.jvm as jvm
 import weka.core.packages as packages
 from weka.core.converters import Loader
@@ -39,7 +38,7 @@ for pkg in pkgs:
         print("Installing " + pkg)
         packages.install_package(pkg)
 if not installed:
-    print("Please restart")
+    print("Installed package(s), please restart")
     jvm.stop()
     exit()
 
@@ -48,27 +47,27 @@ fname = data_dir + os.sep + "diabetes.arff"
 print("\nLoading dataset: " + fname + "\n")
 loader = Loader(classname="weka.core.converters.ArffLoader")
 data = loader.load_file(fname)
-data.set_class_index(data.num_attributes() - 1)
+data.class_index = data.num_attributes - 1
 
 # J48
 cls = Classifier(classname="weka.classifiers.trees.J48")
 evl = Evaluation(data)
 evl.crossvalidate_model(cls, data, 10, Random(1))
-print("J48: %0.1f%%" % evl.percent_correct())
+print("J48: %0.1f%%" % evl.percent_correct)
 
 # CVParameterSelection with J48 - confidenceFactor
 cls = Classifier(classname="weka.classifiers.meta.CVParameterSelection",
                  options=["-W", "weka.classifiers.trees.J48", "-P", "C 0.1 0.9 9"])
 evl = Evaluation(data)
 evl.crossvalidate_model(cls, data, 10, Random(1))
-print("CVParameterSelection (confidenceFactor): %0.1f%%" % evl.percent_correct())
+print("CVParameterSelection (confidenceFactor): %0.1f%%" % evl.percent_correct)
 
 # CVParameterSelection with J48 - confidenceFactor+minNumObj
 cls = Classifier(classname="weka.classifiers.meta.CVParameterSelection",
                  options=["-W", "weka.classifiers.trees.J48", "-P", "C 0.1 0.9 9", "-P", "M 1 10 10"])
 evl = Evaluation(data)
 evl.crossvalidate_model(cls, data, 10, Random(1))
-print("CVParameterSelection (confidenceFactor+minNumObj): %0.1f%%" % evl.percent_correct())
+print("CVParameterSelection (confidenceFactor+minNumObj): %0.1f%%" % evl.percent_correct)
 
 # GridSearch with J48 - confidenceFactor+minNumObj
 cls = Classifier(classname="weka.classifiers.meta.GridSearch",
@@ -89,26 +88,26 @@ cls = Classifier(classname="weka.classifiers.meta.GridSearch",
                  ])
 evl = Evaluation(data)
 evl.crossvalidate_model(cls, data, 10, Random(1))
-print("GridSearch (confidenceFactor+minNumObj): %0.1f%%" % evl.percent_correct())
+print("GridSearch (confidenceFactor+minNumObj): %0.1f%%" % evl.percent_correct)
 
 # load credit-g
 fname = data_dir + os.sep + "credit-g.arff"
 print("\nLoading dataset: " + fname + "\n")
 loader = Loader(classname="weka.core.converters.ArffLoader")
 data = loader.load_file(fname)
-data.set_class_index(data.num_attributes() - 1)
+data.class_index = data.num_attributes - 1
 
 # NaiveBayes
 cls = Classifier(classname="weka.classifiers.bayes.NaiveBayes")
 evl = Evaluation(data)
 evl.crossvalidate_model(cls, data, 10, Random(1))
-print("NaiveBayes: %0.1f%%" % evl.percent_correct())
+print("NaiveBayes: %0.1f%%" % evl.percent_correct)
 
 # ThresholdSelector with NaiveBayes
 cls = Classifier(classname="weka.classifiers.meta.ThresholdSelector",
                  options=["-W", "weka.classifiers.bayes.NaiveBayes", "-M", "ACCURACY", "-E", "0", "-C", "1"])
 evl = Evaluation(data)
 evl.crossvalidate_model(cls, data, 10, Random(1))
-print("ThresholdSelector: %0.1f%%" % evl.percent_correct())
+print("ThresholdSelector: %0.1f%%" % evl.percent_correct)
 
 jvm.stop()

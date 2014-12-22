@@ -19,7 +19,7 @@
 import os
 data_dir = os.environ.get("WEKAMOOC_DATA")
 if data_dir is None:
-  data_dir = "." + os.sep + "data"
+    data_dir = "." + os.sep + "data"
 
 import os
 import weka.core.jvm as jvm
@@ -35,14 +35,14 @@ fname = data_dir + os.sep + "ionosphere.arff"
 print("\nLoading dataset: " + fname + "\n")
 loader = Loader(classname="weka.core.converters.ArffLoader")
 data = loader.load_file(fname)
-data.set_class_index(data.num_attributes() - 1)
+data.class_index = data.num_attributes - 1
 
 for equal in ["", "-F"]:
     print("\nEqual frequency binning? " + str(equal == "-F") + "\n")
     for bins in [0, 40, 10, 5, 2]:
         if bins > 0:
             fltr = Filter(classname="weka.filters.unsupervised.attribute.Discretize", options=["-B", str(bins), equal])
-            fltr.set_inputformat(data)
+            fltr.inputformat(data)
             filtered = fltr.filter(data)
         else:
             filtered = data
@@ -59,6 +59,6 @@ for equal in ["", "-F"]:
             if line.find("Size of the tree :") > -1:
                 nodes = line.replace("Size of the tree :", "").strip()
         # output stats
-        print("bins=%i accuracy=%0.1f nodes=%s" % (bins, evl.percent_correct(), nodes))
+        print("bins=%i accuracy=%0.1f nodes=%s" % (bins, evl.percent_correct, nodes))
 
 jvm.stop()

@@ -19,9 +19,8 @@
 import os
 data_dir = os.environ.get("WEKAMOOC_DATA")
 if data_dir is None:
-  data_dir = "." + os.sep + "data"
+    data_dir = "." + os.sep + "data"
 
-import os
 import numpy
 import weka.core.jvm as jvm
 from weka.core.converters import Loader
@@ -35,14 +34,14 @@ loader = Loader(classname="weka.core.converters.ArffLoader")
 fname = data_dir + os.sep + "diabetes.arff"
 print("\nLoading dataset: " + fname + "\n")
 data = loader.load_file(fname)
-data.set_class_index(data.num_attributes() - 1)
+data.class_index = data.num_attributes - 1
 
 # determine baseline with ZeroR
 zeror = Classifier(classname="weka.classifiers.rules.ZeroR")
 zeror.build_classifier(data)
 evl = Evaluation(data)
 evl.test_model(zeror, data)
-print("Baseline accuracy (ZeroR): %0.1f%%" % evl.percent_correct())
+print("Baseline accuracy (ZeroR): %0.1f%%" % evl.percent_correct)
 
 print("\nHoldout 10%...")
 # use seed 1-10 and perform random split with 90%
@@ -51,8 +50,8 @@ for i in xrange(1, 11):
     evl = Evaluation(data)
     evl.evaluate_train_test_split(
         Classifier(classname="weka.classifiers.trees.J48"), data, 90.0, Random(i))
-    perc.append(round(evl.percent_correct(), 1))
-    print("Accuracy with seed %i: %0.1f%%" % (i, evl.percent_correct()))
+    perc.append(round(evl.percent_correct, 1))
+    print("Accuracy with seed %i: %0.1f%%" % (i, evl.percent_correct))
 
 # calculate mean and standard deviation
 nperc = numpy.array(perc)
@@ -64,8 +63,8 @@ perc = []
 for i in xrange(1, 11):
     evl = Evaluation(data)
     evl.crossvalidate_model(Classifier(classname="weka.classifiers.trees.J48"), data, 10, Random(i))
-    perc.append(round(evl.percent_correct(), 1))
-    print("Accuracy with seed %i: %0.1f%%" % (i, evl.percent_correct()))
+    perc.append(round(evl.percent_correct, 1))
+    print("Accuracy with seed %i: %0.1f%%" % (i, evl.percent_correct))
 
 # calculate mean and standard deviation
 nperc = numpy.array(perc)

@@ -19,14 +19,13 @@
 import os
 data_dir = os.environ.get("WEKAMOOC_DATA")
 if data_dir is None:
-  data_dir = "." + os.sep + "data"
+    data_dir = "." + os.sep + "data"
 
-import os
 from numpy import array
 import weka.core.jvm as jvm
 from weka.core.converters import Loader
 from weka.core.classes import Random
-from weka.classifiers import Classifier, Evaluation, CostMatrix, PredictionOutput
+from weka.classifiers import Classifier, Evaluation, CostMatrix
 import weka.classifiers as classifiers
 
 jvm.start()
@@ -36,7 +35,7 @@ fname = data_dir + os.sep + "credit-g.arff"
 print("\nLoading dataset: " + fname + "\n")
 loader = Loader(classname="weka.core.converters.ArffLoader")
 data = loader.load_file(fname)
-data.set_class_index(data.num_attributes() - 1)
+data.class_index = data.num_attributes - 1
 
 # cross-validate NaiveBayes
 classifier = "weka.classifiers.bayes.NaiveBayes"
@@ -44,10 +43,10 @@ print("\n--> " + classifier + "\n")
 cls = Classifier(classname=classifier)
 evl = Evaluation(data)
 evl.crossvalidate_model(cls, data, 10, Random(1))
-preds = classifiers.predictions_to_instances(data, evl.predictions())
-preds.sort(preds.get_attribute_by_name("distribution-good").get_index())
-print(evl.to_summary())
-print(evl.to_matrix())
+preds = classifiers.predictions_to_instances(data, evl.predictions)
+preds.sort(preds.attribute_by_name("distribution-good").index)
+print(evl.summary())
+print(evl.matrix())
 print(preds)
 
 # cross-validate J48
@@ -56,10 +55,10 @@ print("\n--> " + classifier + "\n")
 cls = Classifier(classname=classifier, options=["-M", "100"])
 evl = Evaluation(data)
 evl.crossvalidate_model(cls, data, 10, Random(1))
-preds = classifiers.predictions_to_instances(data, evl.predictions())
-preds.sort(preds.get_attribute_by_name("distribution-good").get_index())
-print(evl.to_summary())
-print(evl.to_matrix())
+preds = classifiers.predictions_to_instances(data, evl.predictions)
+preds.sort(preds.attribute_by_name("distribution-good").index)
+print(evl.summary())
+print(evl.matrix())
 print(preds)
 
 # cross-validate CostSensitiveClassifier with J48 (minimize cost)
@@ -72,8 +71,8 @@ cls = Classifier(classname=classifier,
                  options=["-M", "-W", base, "-cost-matrix", matrx.to_matlab()])
 evl = Evaluation(data)
 evl.crossvalidate_model(cls, data, 10, Random(1))
-print("Accuracy: %0.1f" % evl.percent_correct())
-print(evl.to_matrix())
+print("Accuracy: %0.1f" % evl.percent_correct)
+print(evl.matrix())
 
 # cross-validate Bagging with J48
 classifier = "weka.classifiers.meta.Bagging"
@@ -83,8 +82,8 @@ cls = Classifier(classname=classifier,
                  options=["-W", base])
 evl = Evaluation(data)
 evl.crossvalidate_model(cls, data, 10, Random(1))
-print("Accuracy: %0.1f" % evl.percent_correct())
-print(evl.to_matrix())
+print("Accuracy: %0.1f" % evl.percent_correct)
+print(evl.matrix())
 
 # cross-validate CostSensitiveClassifier with NaiveBayes
 classifier = "weka.classifiers.meta.CostSensitiveClassifier"
@@ -96,8 +95,8 @@ cls = Classifier(classname=classifier,
                  options=["-W", base, "-cost-matrix", matrx.to_matlab()])
 evl = Evaluation(data)
 evl.crossvalidate_model(cls, data, 10, Random(1))
-print("Accuracy: %0.1f" % evl.percent_correct())
-print(evl.to_matrix())
+print("Accuracy: %0.1f" % evl.percent_correct)
+print(evl.matrix())
 
 # cross-validate CostSensitiveClassifier with J48
 classifier = "weka.classifiers.meta.CostSensitiveClassifier"
@@ -109,8 +108,8 @@ cls = Classifier(classname=classifier,
                  options=["-W", base, "-cost-matrix", matrx.to_matlab()])
 evl = Evaluation(data)
 evl.crossvalidate_model(cls, data, 10, Random(1))
-print("Accuracy: %0.1f" % evl.percent_correct())
-print(evl.to_matrix())
+print("Accuracy: %0.1f" % evl.percent_correct)
+print(evl.matrix())
 
 # cross-validate CostSensitiveClassifier with Bagged J48
 classifier = "weka.classifiers.meta.CostSensitiveClassifier"
@@ -123,7 +122,7 @@ cls = Classifier(classname=classifier,
                  options=["-W", base, "-cost-matrix", matrx.to_matlab(), "--", "-W", "weka.classifiers.trees.J48"])
 evl = Evaluation(data)
 evl.crossvalidate_model(cls, data, 10, Random(1))
-print("Accuracy: %0.1f" % evl.percent_correct())
-print(evl.to_matrix())
+print("Accuracy: %0.1f" % evl.percent_correct)
+print(evl.matrix())
 
 jvm.stop()

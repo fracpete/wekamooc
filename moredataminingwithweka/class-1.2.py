@@ -19,7 +19,7 @@
 import os
 data_dir = os.environ.get("WEKAMOOC_DATA")
 if data_dir is None:
-  data_dir = "." + os.sep + "data"
+    data_dir = "." + os.sep + "data"
 
 import os
 import tempfile
@@ -51,9 +51,9 @@ matrix = ResultMatrix(
     classname="weka.experiment.ResultMatrixPlainText",
     options=["-print-row-names", "-print-col-names", "-enum-col-names", "-show-stddev"])
 tester = Tester(classname="weka.experiment.PairedCorrectedTTester", options=["-V", "-S", "0.05"])
-comparison_col = data.get_attribute_by_name("Percent_correct").get_index()
-tester.set_instances(data)
-tester.set_resultmatrix(matrix)
+comparison_col = data.attribute_by_name("Percent_correct").index
+tester.instances = data
+tester.resultmatrix = matrix
 print(tester.header(comparison_col))
 print(tester.multi_resultset_full(0, comparison_col))
 
@@ -76,9 +76,9 @@ matrix = ResultMatrix(
     classname="weka.experiment.ResultMatrixPlainText",
     options=["-print-row-names", "-print-col-names", "-enum-col-names", "-show-stddev"])
 tester = Tester(classname="weka.experiment.PairedCorrectedTTester", options=["-V", "-S", "0.05"])
-comparison_col = data.get_attribute_by_name("Percent_correct").get_index()
-tester.set_instances(data)
-tester.set_resultmatrix(matrix)
+comparison_col = data.attribute_by_name("Percent_correct").index
+tester.instances = data
+tester.resultmatrix = matrix
 print(tester.header(comparison_col))
 print(tester.multi_resultset_full(0, comparison_col))
 

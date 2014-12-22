@@ -19,9 +19,8 @@
 import os
 data_dir = os.environ.get("WEKAMOOC_DATA")
 if data_dir is None:
-  data_dir = "." + os.sep + "data"
+    data_dir = "." + os.sep + "data"
 
-import os
 import weka.core.jvm as jvm
 from weka.core.converters import Loader
 from weka.classifiers import FilteredClassifier, Classifier, Evaluation
@@ -35,21 +34,21 @@ fname = data_dir + os.sep + "ReutersGrain-train.arff"
 print("\nLoading dataset: " + fname + "\n")
 loader = Loader(classname="weka.core.converters.ArffLoader")
 data = loader.load_file(fname)
-data.set_class_index(data.num_attributes() - 1)
+data.class_index = data.num_attributes - 1
 
 # load ReutersGrain-train
 fname = data_dir + os.sep + "ReutersGrain-test.arff"
 print("\nLoading dataset: " + fname + "\n")
 loader = Loader(classname="weka.core.converters.ArffLoader")
 test = loader.load_file(fname)
-test.set_class_index(test.num_attributes() - 1)
+test.class_index = test.num_attributes - 1
 
 setups = (
     ("weka.classifiers.trees.J48", []),
     ("weka.classifiers.bayes.NaiveBayes", []),
     ("weka.classifiers.bayes.NaiveBayesMultinomial", []),
     ("weka.classifiers.bayes.NaiveBayesMultinomial", ["-C"]),
-    ("weka.classifiers.bayes.NaiveBayesMultinomial", ["-C", "-L", "-S"])
+    ("weka.classifiers.bayes.NaiveBayesMultinomial", ["-C", "-L", "-stopwords-handler", "weka.core.stopwords.Rainbow"])
 )
 
 # cross-validate classifiers
@@ -57,14 +56,14 @@ for setup in setups:
     classifier, opt = setup
     print("\n--> %s (filter options: %s)\n" % (classifier, " ".join(opt)))
     cls = FilteredClassifier()
-    cls.set_classifier(Classifier(classname=classifier))
-    cls.set_filter(Filter(classname="weka.filters.unsupervised.attribute.StringToWordVector", options=opt))
+    cls.classifier = Classifier(classname=classifier)
+    cls.filter = Filter(classname="weka.filters.unsupervised.attribute.StringToWordVector", options=opt)
     cls.build_classifier(data)
     evl = Evaluation(test)
     evl.test_model(cls, test)
-    print("Accuracy: %0.0f%%" % evl.percent_correct())
+    print("Accuracy: %0.0f%%" % evl.percent_correct)
     tcdata = plc.generate_thresholdcurve_data(evl, 0)
     print("AUC: %0.3f" % plc.get_auc(tcdata))
-    print(evl.to_matrix("Matrix:"))
+    print(evl.matrix("Matrix:"))
 
 jvm.stop()

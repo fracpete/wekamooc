@@ -19,9 +19,8 @@
 import os
 data_dir = os.environ.get("WEKAMOOC_DATA")
 if data_dir is None:
-  data_dir = "." + os.sep + "data"
+    data_dir = "." + os.sep + "data"
 
-import os
 import weka.core.jvm as jvm
 from weka.core.converters import Loader
 from weka.core.classes import Random
@@ -35,14 +34,14 @@ loader = Loader(classname="weka.core.converters.ArffLoader")
 fname = data_dir + os.sep + "cpu.arff"
 print("\nLoading dataset: " + fname + "\n")
 data = loader.load_file(fname)
-data.set_class_index(data.num_attributes() - 1)
+data.class_index = data.num_attributes - 1
 
 # cross-validate LinearRegression, display model
 print("\n--> LinearRegression\n")
 cls = Classifier(classname="weka.classifiers.functions.LinearRegression")
 evl = Evaluation(data)
 evl.crossvalidate_model(cls, data, 10, Random(1))
-print("10-fold cross-validation:\n" + evl.to_summary())
+print("10-fold cross-validation:\n" + evl.summary())
 cls.build_classifier(data)
 print("Model:\n\n" + str(cls))
 
@@ -51,7 +50,7 @@ print("\n--> M5P\n")
 cls = Classifier(classname="weka.classifiers.trees.M5P")
 evl = Evaluation(data)
 evl.crossvalidate_model(cls, data, 10, Random(1))
-print("10-fold cross-validation:\n" + evl.to_summary())
+print("10-fold cross-validation:\n" + evl.summary())
 cls.build_classifier(data)
 print("Model:\n\n" + str(cls))
 plg.plot_dot_graph(cls.graph())

@@ -19,9 +19,8 @@
 import os
 data_dir = os.environ.get("WEKAMOOC_DATA")
 if data_dir is None:
-  data_dir = "." + os.sep + "data"
+    data_dir = "." + os.sep + "data"
 
-import os
 import weka.core.jvm as jvm
 from weka.core.converters import Loader
 from weka.classifiers import Classifier, FilteredClassifier, Evaluation, PredictionOutput
@@ -35,14 +34,14 @@ fname = data_dir + os.sep + "simpletext-train.arff"
 print("\nLoading dataset: " + fname + "\n")
 loader = Loader(classname="weka.core.converters.ArffLoader")
 data = loader.load_file(fname)
-data.set_class_index(data.num_attributes() - 1)
+data.class_index = data.num_attributes - 1
 
 # 1a filter data
 print("Filtering data...")
 fltr = Filter("weka.filters.unsupervised.attribute.StringToWordVector")
-fltr.set_inputformat(data)
+fltr.inputformat(data)
 filtered = fltr.filter(data)
-filtered.set_class_index(0)
+filtered.class_index = 0
 
 # 1b build classifier
 print("Building/evaluating classifier...")
@@ -50,7 +49,7 @@ cls = Classifier(classname="weka.classifiers.trees.J48")
 cls.build_classifier(filtered)
 evl = Evaluation(filtered)
 evl.test_model(cls, filtered)
-print(evl.to_summary())
+print(evl.summary())
 print(str(cls))
 plg.plot_dot_graph(cls.graph())
 
@@ -59,14 +58,14 @@ fname = data_dir + os.sep + "simpletext-test.arff"
 print("\nLoading dataset: " + fname + "\n")
 loader = Loader(classname="weka.core.converters.ArffLoader")
 test = loader.load_file(fname)
-test.set_class_index(test.num_attributes() - 1)
+test.class_index = test.num_attributes - 1
 print("Building/evaluating filtered classifier...")
 cls = FilteredClassifier()
-cls.set_classifier(Classifier(classname="weka.classifiers.trees.J48"))
-cls.set_filter(Filter(classname="weka.filters.unsupervised.attribute.StringToWordVector"))
+cls.classifier = Classifier(classname="weka.classifiers.trees.J48")
+cls.filter = Filter(classname="weka.filters.unsupervised.attribute.StringToWordVector")
 cls.build_classifier(data)
 pout = PredictionOutput(classname="weka.classifiers.evaluation.output.prediction.PlainText")
-pout.set_header(test)
+pout.header = test
 evl = Evaluation(data)
 evl.test_model(cls, test, pout)
 print(str(pout))
@@ -77,23 +76,23 @@ fname = data_dir + os.sep + "ReutersCorn-train.arff"
 print("\nLoading dataset: " + fname + "\n")
 loader = Loader(classname="weka.core.converters.ArffLoader")
 data = loader.load_file(fname)
-data.set_class_index(data.num_attributes() - 1)
+data.class_index = data.num_attributes - 1
 
 # load ReutersCorn-test
 fname = data_dir + os.sep + "ReutersCorn-test.arff"
 print("\nLoading dataset: " + fname + "\n")
 loader = Loader(classname="weka.core.converters.ArffLoader")
 test = loader.load_file(fname)
-test.set_class_index(test.num_attributes() - 1)
+test.class_index = test.num_attributes - 1
 
 # build/evaluate classifier
 cls = FilteredClassifier()
-cls.set_classifier(Classifier(classname="weka.classifiers.trees.J48"))
-cls.set_filter(Filter(classname="weka.filters.unsupervised.attribute.StringToWordVector"))
+cls.classifier = Classifier(classname="weka.classifiers.trees.J48")
+cls.filter = Filter(classname="weka.filters.unsupervised.attribute.StringToWordVector")
 cls.build_classifier(data)
 evl = Evaluation(data)
 evl.test_model(cls, test)
-print(evl.to_summary())
+print(evl.summary())
 print(str(cls))
 
 jvm.stop()

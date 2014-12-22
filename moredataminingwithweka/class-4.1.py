@@ -19,9 +19,8 @@
 import os
 data_dir = os.environ.get("WEKAMOOC_DATA")
 if data_dir is None:
-  data_dir = "." + os.sep + "data"
+    data_dir = "." + os.sep + "data"
 
-import os
 import weka.core.jvm as jvm
 from weka.core.converters import Loader
 from weka.core.classes import Random
@@ -36,33 +35,33 @@ fname = data_dir + os.sep + "glass.arff"
 print("\nLoading dataset: " + fname + "\n")
 loader = Loader(classname="weka.core.converters.ArffLoader")
 data = loader.load_file(fname)
-data.set_class_index(data.num_attributes() - 1)
+data.class_index = data.num_attributes - 1
 
 # cross-validate J48
 cls = Classifier(classname="weka.classifiers.trees.J48")
 evl = Evaluation(data)
 evl.crossvalidate_model(cls, data, 10, Random(1))
-print("All attributes: %0.0f%%" % evl.percent_correct())
+print("All attributes: %0.0f%%" % evl.percent_correct)
 
 # remove attributes (1) and cross-validate J48
 atts = "RI|Mg|Type"
 flt = Filter(classname="weka.filters.unsupervised.attribute.RemoveByName", options=["-E", "(" + atts + ")", "-V"])
-flt.set_inputformat(data)
+flt.inputformat(data)
 filtered = flt.filter(data)
 cls = Classifier(classname="weka.classifiers.trees.J48")
 evl = Evaluation(filtered)
 evl.crossvalidate_model(cls, filtered, 10, Random(1))
-print(atts + ": %0.0f%%" % evl.percent_correct())
+print(atts + ": %0.0f%%" % evl.percent_correct)
 
 # remove attributes (2) and cross-validate J48
 atts = "RI|Na|Mg|Ca|Ba|Type"
 flt = Filter(classname="weka.filters.unsupervised.attribute.RemoveByName", options=["-E", "(" + atts + ")", "-V"])
-flt.set_inputformat(data)
+flt.inputformat(data)
 filtered = flt.filter(data)
 cls = Classifier(classname="weka.classifiers.trees.J48")
 evl = Evaluation(filtered)
 evl.crossvalidate_model(cls, filtered, 10, Random(1))
-print(atts + ": %0.0f%%" % evl.percent_correct())
+print(atts + ": %0.0f%%" % evl.percent_correct)
 
 setups = (
     (

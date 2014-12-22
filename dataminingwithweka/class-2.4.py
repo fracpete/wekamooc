@@ -19,9 +19,8 @@
 import os
 data_dir = os.environ.get("WEKAMOOC_DATA")
 if data_dir is None:
-  data_dir = "." + os.sep + "data"
+    data_dir = "." + os.sep + "data"
 
-import os
 import weka.core.jvm as jvm
 from weka.core.converters import Loader
 from weka.core.classes import Random
@@ -42,28 +41,28 @@ fname = data_dir + os.sep + "diabetes.arff"
 print("\nLoading dataset: " + fname + "\n")
 loader = Loader(classname="weka.core.converters.ArffLoader")
 data = loader.load_file(fname)
-data.set_class_index(data.num_attributes() - 1)
+data.class_index = data.num_attributes - 1
 
 # random split on data
 for classifier in classifiers:
     cls = Classifier(classname=classifier)
     evl = Evaluation(data)
     evl.evaluate_train_test_split(cls, data, 66.0, Random(1))
-    print(classifier + ": %0.0f" % evl.percent_correct())
+    print(classifier + ": %0.0f" % evl.percent_correct)
 
 # load supermarket
 fname = data_dir + os.sep + "supermarket.arff"
 print("\nLoading dataset: " + fname + "\n")
 loader = Loader(classname="weka.core.converters.ArffLoader")
 data = loader.load_file(fname)
-data.set_class_index(data.num_attributes() - 1)
+data.class_index = data.num_attributes - 1
 
 # random split on data
 for classifier in classifiers:
     cls = Classifier(classname=classifier)
     evl = Evaluation(data)
     evl.evaluate_train_test_split(cls, data, 66.0, Random(1))
-    print(classifier + ": %0.0f" % evl.percent_correct())
+    print(classifier + ": %0.0f" % evl.percent_correct)
 
 jvm.stop()
 

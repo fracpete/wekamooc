@@ -19,9 +19,8 @@
 import os
 data_dir = os.environ.get("WEKAMOOC_DATA")
 if data_dir is None:
-  data_dir = "." + os.sep + "data"
+    data_dir = "." + os.sep + "data"
 
-import os
 import weka.core.jvm as jvm
 from weka.core.converters import Loader
 from weka.core.classes import Random
@@ -35,13 +34,13 @@ for dataset in ["diabetes.arff", "breast-cancer.arff"]:
     fname = data_dir + os.sep + dataset
     print("\nLoading dataset: " + fname + "\n")
     data = loader.load_file(fname)
-    data.set_class_index(data.num_attributes() - 1)
+    data.class_index = data.num_attributes - 1
 
     # cross-validate default J48, display model
     cls = Classifier(classname="weka.classifiers.trees.J48")
     evl = Evaluation(data)
     evl.crossvalidate_model(cls, data, 10, Random(1))
-    print("10-fold cross-validation (default):\n" + evl.to_summary())
+    print("10-fold cross-validation (default):\n" + evl.summary())
     cls.build_classifier(data)
     print("Model (default):\n\n" + str(cls))
 
@@ -49,7 +48,7 @@ for dataset in ["diabetes.arff", "breast-cancer.arff"]:
     cls = Classifier(classname="weka.classifiers.trees.J48", options=["-U"])
     evl = Evaluation(data)
     evl.crossvalidate_model(cls, data, 10, Random(1))
-    print("10-fold cross-validation (unpruned):\n" + evl.to_summary())
+    print("10-fold cross-validation (unpruned):\n" + evl.summary())
     cls.build_classifier(data)
     print("Model (unpruned):\n\n" + str(cls))
 

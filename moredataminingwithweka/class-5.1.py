@@ -19,13 +19,12 @@
 import os
 data_dir = os.environ.get("WEKAMOOC_DATA")
 if data_dir is None:
-  data_dir = "." + os.sep + "data"
+    data_dir = "." + os.sep + "data"
 
-import os
 import weka.core.jvm as jvm
 from weka.core.converters import Loader
 from weka.core.classes import Random
-from weka.classifiers import Classifier, Evaluation, CostMatrix, PredictionOutput
+from weka.classifiers import Classifier, Evaluation
 
 jvm.start()
 
@@ -45,13 +44,13 @@ for dataset in datasets:
     fname = data_dir + os.sep + dataset
     loader = Loader(classname="weka.core.converters.ArffLoader")
     data = loader.load_file(fname)
-    data.set_class_index(data.num_attributes() - 1)
+    data.class_index = data.num_attributes - 1
 
     for classifier in classifiers:
         # cross-validate classifier
         cls = Classifier(classname=classifier)
         evl = Evaluation(data)
         evl.crossvalidate_model(cls, data, 10, Random(1))
-        print("%s / %s: %0.1f%%" % (dataset, classifier, evl.percent_correct()))
+        print("%s / %s: %0.1f%%" % (dataset, classifier, evl.percent_correct))
 
 jvm.stop()

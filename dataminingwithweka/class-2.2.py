@@ -19,9 +19,8 @@
 import os
 data_dir = os.environ.get("WEKAMOOC_DATA")
 if data_dir is None:
-  data_dir = "." + os.sep + "data"
+    data_dir = "." + os.sep + "data"
 
-import os
 import weka.core.jvm as jvm
 from weka.core.converters import Loader
 from weka.core.classes import Random
@@ -35,12 +34,12 @@ loader = Loader(classname="weka.core.converters.ArffLoader")
 fname = data_dir + os.sep + "segment-challenge.arff"
 print("\nLoading dataset: " + fname + "\n")
 train = loader.load_file(fname)
-train.set_class_index(train.num_attributes() - 1)
+train.class_index = train.num_attributes - 1
 
 fname = data_dir + os.sep + "segment-test.arff"
 print("\nLoading dataset: " + fname + "\n")
 test = loader.load_file(fname)
-test.set_class_index(train.num_attributes() - 1)
+test.class_index = train.num_attributes - 1
 
 # build J48
 cls = Classifier(classname="weka.classifiers.trees.J48")
@@ -49,16 +48,16 @@ cls.build_classifier(train)
 # evaluate on test
 evl = Evaluation(train)
 evl.test_model(cls, test)
-print("Test set accuracy: %0.0f%%" % evl.percent_correct())
+print("Test set accuracy: %0.0f%%" % evl.percent_correct)
 
 # evaluate on train
 evl = Evaluation(train)
 evl.test_model(cls, train)
-print("Train set accuracy: %0.0f%%" % evl.percent_correct())
+print("Train set accuracy: %0.0f%%" % evl.percent_correct)
 
 # evaluate on random split
 evl = Evaluation(train)
 evl.evaluate_train_test_split(cls, train, 66.0, Random(1))
-print("Random split accuracy: %0.0f%%" % evl.percent_correct())
+print("Random split accuracy: %0.0f%%" % evl.percent_correct)
 
 jvm.stop()

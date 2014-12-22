@@ -19,9 +19,8 @@
 import os
 data_dir = os.environ.get("WEKAMOOC_DATA")
 if data_dir is None:
-  data_dir = "." + os.sep + "data"
+    data_dir = "." + os.sep + "data"
 
-import os
 import weka.core.jvm as jvm
 from weka.core.converters import Loader
 from weka.clusterers import Clusterer, ClusterEvaluation
@@ -38,7 +37,7 @@ data = loader.load_file(fname)
 
 # remove class attribute
 flt = Filter(classname="weka.filters.unsupervised.attribute.Remove", options=["-R", "last"])
-flt.set_inputformat(data)
+flt.inputformat(data)
 filtered = flt.filter(data)
 
 # build KMeans
@@ -48,25 +47,25 @@ cl.build_clusterer(filtered)
 evl = ClusterEvaluation()
 evl.set_model(cl)
 evl.test_model(filtered)
-print(evl.get_cluster_results())
+print(evl.cluster_results())
 plc.plot_cluster_assignments(evl, data, atts=[], inst_no=True, wait=True)
 
 # use AddCluster filter
 print("\n--> AddCluster filter\n")
 flt = Filter(classname="weka.filters.unsupervised.attribute.AddCluster",
              options=["-W", "weka.clusterers.SimpleKMeans -N 3"])
-flt.set_inputformat(filtered)
+flt.inputformat(filtered)
 addcl = flt.filter(filtered)
 print(addcl)
 
 # classes-to-clusters evaluation
 print("\n--> Classes to clusters\n")
-data.set_class_index(data.num_attributes() - 1)
+data.class_index = data.num_attributes - 1
 cl = Clusterer(classname="weka.clusterers.SimpleKMeans", options=["-N", "3"])
 cl.build_clusterer(filtered)  # WITHOUT class attribute
 evl = ClusterEvaluation()
 evl.set_model(cl)
 evl.test_model(data)  # WITH class attribute
-print(evl.get_cluster_results())
+print(evl.cluster_results())
 
 jvm.stop()

@@ -19,9 +19,8 @@
 import os
 data_dir = os.environ.get("WEKAMOOC_DATA")
 if data_dir is None:
-  data_dir = "." + os.sep + "data"
+    data_dir = "." + os.sep + "data"
 
-import os
 import sys
 import weka.core.jvm as jvm
 from weka.core.converters import Loader
@@ -39,12 +38,12 @@ fname = data_dir + os.sep + "glass.arff"
 print("\nLoading dataset: " + fname + "\n")
 loader = Loader(classname="weka.core.converters.ArffLoader")
 data = loader.load_file(fname)
-data.set_class_index(data.num_attributes() - 1)
+data.class_index = data.num_attributes - 1
 
 # compute baseline
 evl = Evaluation(data)
 evl.crossvalidate_model(Classifier("weka.classifiers.rules.ZeroR"), data, 10, Random(1))
-baseline = evl.percent_correct()
+baseline = evl.percent_correct
 
 # generate learning curves
 percentages = [1, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
@@ -67,11 +66,11 @@ for repetition in repetitions:
             flt = Filter(classname="weka.filters.unsupervised.instance.Resample",
                          options=["-Z", str(percentage), "-no-replacement"])
             fc = FilteredClassifier()
-            fc.set_classifier(cls)
-            fc.set_filter(flt)
+            fc.classifier = cls
+            fc.filter = flt
             evl = Evaluation(data)
             evl.crossvalidate_model(fc, data, 10, Random(seed))
-            curve[percentage] += (evl.percent_correct() / repetition)
+            curve[percentage] += (evl.percent_correct / repetition)
     # progress info
     sys.stdout.write("\n")
 

@@ -13,7 +13,7 @@ http://www.cs.waikato.ac.nz/~ml/weka/mooc/moredataminingwithweka/
 Python (.py)
 ============
 
-These code examples use the following Python library:
+These code examples use the following Python library (0.2.0 or later):
 
 https://pypi.python.org/pypi/python-weka-wrapper
 

@@ -19,9 +19,8 @@
 import os
 data_dir = os.environ.get("WEKAMOOC_DATA")
 if data_dir is None:
-  data_dir = "." + os.sep + "data"
+    data_dir = "." + os.sep + "data"
 
-import os
 import weka.core.jvm as jvm
 from weka.core.converters import Loader
 from weka.core.classes import Random
@@ -52,44 +51,44 @@ fname = data_dir + os.sep + "ionosphere.arff"
 print("\nLoading dataset: " + fname + "\n")
 loader = Loader(classname="weka.core.converters.ArffLoader")
 data = loader.load_file(fname)
-data.set_class_index(data.num_attributes() - 1)
+data.class_index = data.num_attributes - 1
 
 # 1. cheating with default filter
 fltr = Filter(classname="weka.filters.supervised.attribute.Discretize", options=[])
-fltr.set_inputformat(data)
+fltr.inputformat(data)
 filtered = fltr.filter(data)
 cls = Classifier(classname="weka.classifiers.trees.J48")
 evl = Evaluation(filtered)
 evl.crossvalidate_model(cls, filtered, 10, Random(1))
 cls.build_classifier(filtered)
-print("cheating (default): accuracy=%0.1f nodes=%s" % (evl.percent_correct(), get_nodes(str(cls))))
+print("cheating (default): accuracy=%0.1f nodes=%s" % (evl.percent_correct, get_nodes(str(cls))))
 
 # 2. using FilteredClassifier with default filter
 cls = FilteredClassifier()
-cls.set_classifier(Classifier(classname="weka.classifiers.trees.J48"))
-cls.set_filter(Filter(classname="weka.filters.supervised.attribute.Discretize", options=[]))
+cls.classifier = Classifier(classname="weka.classifiers.trees.J48")
+cls.filter = Filter(classname="weka.filters.supervised.attribute.Discretize", options=[])
 evl = Evaluation(data)
 evl.crossvalidate_model(cls, data, 10, Random(1))
 cls.build_classifier(data)
-print("FilteredClassifier (default): accuracy=%0.1f nodes=%s" % (evl.percent_correct(), get_nodes(str(cls))))
+print("FilteredClassifier (default): accuracy=%0.1f nodes=%s" % (evl.percent_correct, get_nodes(str(cls))))
 
 # 3. using FilteredClassifier (make binary)
 cls = FilteredClassifier()
-cls.set_classifier(Classifier(classname="weka.classifiers.trees.J48"))
-cls.set_filter(Filter(classname="weka.filters.supervised.attribute.Discretize", options=["-D"]))
+cls.classifier = Classifier(classname="weka.classifiers.trees.J48")
+cls.filter = Filter(classname="weka.filters.supervised.attribute.Discretize", options=["-D"])
 evl = Evaluation(data)
 evl.crossvalidate_model(cls, data, 10, Random(1))
 cls.build_classifier(data)
-print("FilteredClassifier (make binary): accuracy=%0.1f nodes=%s" % (evl.percent_correct(), get_nodes(str(cls))))
+print("FilteredClassifier (make binary): accuracy=%0.1f nodes=%s" % (evl.percent_correct, get_nodes(str(cls))))
 
 # 1. cheating with make binary
 fltr = Filter(classname="weka.filters.supervised.attribute.Discretize", options=["-D"])
-fltr.set_inputformat(data)
+fltr.inputformat(data)
 filtered = fltr.filter(data)
 cls = Classifier(classname="weka.classifiers.trees.J48")
 evl = Evaluation(filtered)
 evl.crossvalidate_model(cls, filtered, 10, Random(1))
 cls.build_classifier(filtered)
-print("cheating (make binary): accuracy=%0.1f nodes=%s" % (evl.percent_correct(), get_nodes(str(cls))))
+print("cheating (make binary): accuracy=%0.1f nodes=%s" % (evl.percent_correct, get_nodes(str(cls))))
 
 jvm.stop()

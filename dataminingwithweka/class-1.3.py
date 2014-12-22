@@ -19,9 +19,8 @@
 import os
 data_dir = os.environ.get("WEKAMOOC_DATA")
 if data_dir is None:
-  data_dir = "." + os.sep + "data"
+    data_dir = "." + os.sep + "data"
 
-import os
 import weka.core.jvm as jvm
 from weka.core.converters import Loader
 
@@ -38,20 +37,20 @@ print(data)
 
 # print attributes
 print("\nAttributes")
-for i in xrange(data.num_attributes()):
-    att   = data.get_attribute(i)
-    stats = data.get_attribute_stats(i)
+for i in xrange(data.num_attributes):
+    att   = data.attribute(i)
+    stats = data.attribute_stats(i)
     extra = ""
-    if att.is_nominal():
-        for n in xrange(att.num_values()):
+    if att.is_nominal:
+        for n in xrange(att.num_values):
             if n > 0:
                 extra += ", "
-            extra += "%s=%d" % (att.value(n), stats.nominal_counts()[n])
-    elif att.is_numeric():
+            extra += "%s=%d" % (att.value(n), stats.nominal_counts[n])
+    elif att.is_numeric:
         nstats = stats.numeric_stats()
         extra = "min=%0.4f, max=%0.4f, mean=%0.4f, stddev=%0.4f" % \
                 (nstats.min(), nstats.max(), nstats.mean(), nstats.stddev())
-    print(str(i+1) + ". " + att.get_name() + ": " + att.get_type_str(True) + " [" + str(extra) + "]")
+    print(str(i+1) + ". " + att.name + ": " + att.type_str(True) + " [" + str(extra) + "]")
 
 # load glass
 fname = data_dir + os.sep + "glass.arff"
@@ -64,20 +63,20 @@ print(data)
 
 # print attributes
 print("\nAttributes")
-for i in xrange(data.num_attributes()):
-    att   = data.get_attribute(i)
-    stats = data.get_attribute_stats(i)
+for i in xrange(data.num_attributes):
+    att   = data.attribute(i)
+    stats = data.attribute_stats(i)
     extra = ""
-    if att.is_nominal():
-        for n in xrange(att.num_values()):
+    if att.is_nominal:
+        for n in xrange(att.num_values):
             if n > 0:
                 extra += ", "
-            extra += "%s=%d" % (att.value(n), stats.nominal_counts()[n])
-    elif att.is_numeric():
-        nstats = stats.numeric_stats()
+            extra += "%s=%d" % (att.value(n), stats.nominal_counts[n])
+    elif att.is_numeric:
+        nstats = stats.numeric_stats
         extra = "min=%0.4f, max=%0.4f, mean=%0.4f, stddev=%0.4f" % \
-                (nstats.min(), nstats.max(), nstats.mean(), nstats.stddev())
-    print(str(i+1) + ". " + att.get_name() + ": " + att.get_type_str(True) + " [" + str(extra) + "]")
+                (nstats.min, nstats.max, nstats.mean, nstats.stddev)
+    print(str(i+1) + ". " + att.name + ": " + att.type_str(True) + " [" + str(extra) + "]")
 
 jvm.stop()
 

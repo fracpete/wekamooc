@@ -19,9 +19,8 @@
 import os
 data_dir = os.environ.get("WEKAMOOC_DATA")
 if data_dir is None:
-  data_dir = "." + os.sep + "data"
+    data_dir = "." + os.sep + "data"
 
-import os
 import weka.core.jvm as jvm
 from weka.core.converters import Loader
 from weka.core.classes import Random
@@ -35,7 +34,7 @@ if not packages.is_installed("stackingC"):
     print("Installing stackingC...")
     packages.install_package("stackingC")
     jvm.stop()
-    print("Please restart")
+    print("Installed package, please restart")
     exit()
 
 # load glass
@@ -43,7 +42,7 @@ loader = Loader(classname="weka.core.converters.ArffLoader")
 fname = data_dir + os.sep + "glass.arff"
 print("\nLoading dataset: " + fname + "\n")
 data = loader.load_file(fname)
-data.set_class_index(data.num_attributes() - 1)
+data.class_index = data.num_attributes - 1
 
 # compare several meta-classifiers with J48
 for classifier in [("weka.classifiers.trees.J48", []), ("weka.classifiers.meta.Bagging", []),
@@ -56,6 +55,6 @@ for classifier in [("weka.classifiers.trees.J48", []), ("weka.classifiers.meta.B
     cls = Classifier(classname=cname, options=coptions)
     evl = Evaluation(data)
     evl.crossvalidate_model(cls, data, 10, Random(1))
-    print(cname + " cross-validated accuracy: %0.2f" % evl.percent_correct())
+    print(cname + " cross-validated accuracy: %0.2f" % evl.percent_correct)
 
 jvm.stop()

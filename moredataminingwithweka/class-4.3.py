@@ -19,14 +19,12 @@
 import os
 data_dir = os.environ.get("WEKAMOOC_DATA")
 if data_dir is None:
-  data_dir = "." + os.sep + "data"
+    data_dir = "." + os.sep + "data"
 
-import os
 import weka.core.jvm as jvm
 from weka.core.converters import Loader
 from weka.core.classes import Random
 from weka.classifiers import Classifier, Evaluation, SingleClassifierEnhancer
-from weka.attribute_selection import ASEvaluation, ASSearch, AttributeSelection
 
 jvm.start()
 
@@ -35,7 +33,7 @@ fname = data_dir + os.sep + "ionosphere.arff"
 print("\nLoading dataset: " + fname + "\n")
 loader = Loader(classname="weka.core.converters.ArffLoader")
 data = loader.load_file(fname)
-data.set_class_index(data.num_attributes() - 1)
+data.class_index = data.num_attributes - 1
 
 classifiers = [
     "weka.classifiers.bayes.NaiveBayes",
@@ -49,24 +47,24 @@ for classifier in classifiers:
     cls = Classifier(classname=classifier)
     evl = Evaluation(data)
     evl.crossvalidate_model(cls, data, 10, Random(1))
-    print("%s: %0.0f%%" % (classifier, evl.percent_correct()))
+    print("%s: %0.0f%%" % (classifier, evl.percent_correct))
     # meta with cfssubseteval
     meta = SingleClassifierEnhancer(classname="weka.classifiers.meta.AttributeSelectedClassifier")
-    meta.set_options(
+    meta.options = \
         ["-E", "weka.attributeSelection.CfsSubsetEval",
          "-S", "weka.attributeSelection.BestFirst",
-         "-W", classifier])
+         "-W", classifier]
     evl = Evaluation(data)
     evl.crossvalidate_model(meta, data, 10, Random(1))
-    print("%s (cfs): %0.0f%%" % (classifier, evl.percent_correct()))
+    print("%s (cfs): %0.0f%%" % (classifier, evl.percent_correct))
     # meta with wrapper
     meta = SingleClassifierEnhancer(classname="weka.classifiers.meta.AttributeSelectedClassifier")
-    meta.set_options(
+    meta.options = \
         ["-E", "weka.attributeSelection.WrapperSubsetEval -B " + classifier,
          "-S", "weka.attributeSelection.BestFirst",
-         "-W", classifier])
+         "-W", classifier]
     evl = Evaluation(data)
     evl.crossvalidate_model(meta, data, 10, Random(1))
-    print("%s (wrapper): %0.0f%%" % (classifier, evl.percent_correct()))
+    print("%s (wrapper): %0.0f%%" % (classifier, evl.percent_correct))
 
 jvm.stop()

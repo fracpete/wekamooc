@@ -19,9 +19,8 @@
 import os
 data_dir = os.environ.get("WEKAMOOC_DATA")
 if data_dir is None:
-  data_dir = "." + os.sep + "data"
+    data_dir = "." + os.sep + "data"
 
-import os
 import weka.core.jvm as jvm
 from weka.core.converters import Loader
 from weka.core.classes import Random
@@ -35,7 +34,7 @@ loader = Loader(classname="weka.core.converters.ArffLoader")
 fname = data_dir + os.sep + "weather.nominal.arff"
 print("\nLoading dataset: " + fname + "\n")
 data = loader.load_file(fname)
-data.set_class_index(data.num_attributes() - 1)
+data.class_index = data.num_attributes - 1
 
 # define classifiers
 classifiers = ["weka.classifiers.rules.OneR", "weka.classifiers.trees.J48"]
@@ -45,13 +44,13 @@ for classifier in classifiers:
     cls = Classifier(classname=classifier)
     evl = Evaluation(data)
     evl.crossvalidate_model(cls, data, 10, Random(1))
-    print("%s (original): %0.0f%%" % (classifier, evl.percent_correct()))
+    print("%s (original): %0.0f%%" % (classifier, evl.percent_correct))
 
 # replace 'outlook' in first 4 'no' instances with 'missing'
 modified = Instances.copy_instances(data)
 count    = 0
-for i in xrange(modified.num_instances()):
-    if modified.get_instance(i).get_string_value(modified.get_class_index()) == "no":
+for i in xrange(modified.num_instances):
+    if modified.get_instance(i).get_string_value(modified.class_index) == "no":
         count += 1
         modified.get_instance(i).set_missing(0)
         if count == 4:
@@ -62,6 +61,6 @@ for classifier in classifiers:
     cls = Classifier(classname=classifier)
     evl = Evaluation(modified)
     evl.crossvalidate_model(cls, modified, 10, Random(1))
-    print("%s (modified): %0.0f%%" % (classifier, evl.percent_correct()))
+    print("%s (modified): %0.0f%%" % (classifier, evl.percent_correct))
 
 jvm.stop()

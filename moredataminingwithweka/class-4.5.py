@@ -19,9 +19,8 @@
 import os
 data_dir = os.environ.get("WEKAMOOC_DATA")
 if data_dir is None:
-  data_dir = "." + os.sep + "data"
+    data_dir = "." + os.sep + "data"
 
-import os
 from numpy import *
 import weka.core.jvm as jvm
 from weka.core.converters import Loader
@@ -35,7 +34,7 @@ fname = data_dir + os.sep + "credit-g.arff"
 print("\nLoading dataset: " + fname + "\n")
 loader = Loader(classname="weka.core.converters.ArffLoader")
 data = loader.load_file(fname)
-data.set_class_index(data.num_attributes() - 1)
+data.class_index = data.num_attributes - 1
 
 # cross-validate J48
 classifier = "weka.classifiers.trees.J48"
@@ -43,8 +42,8 @@ cls = Classifier(classname=classifier)
 evl = Evaluation(data)
 evl.crossvalidate_model(cls, data, 10, Random(1))
 print("--> %s" % classifier)
-print("Accuracy: %0.1f" % evl.percent_correct())
-print(evl.to_matrix())
+print("Accuracy: %0.1f" % evl.percent_correct)
+print(evl.matrix())
 
 # cross-validate ZeroR with costmatrix
 classifier = "weka.classifiers.rules.ZeroR"
@@ -54,8 +53,8 @@ matrx = CostMatrix(matrx=cost)
 evl = Evaluation(data, matrx)
 evl.crossvalidate_model(cls, data, 10, Random(1))
 print("--> %s (cost matrix)" % classifier)
-print("Accuracy: %0.1f" % evl.percent_correct())
-print(evl.to_matrix())
+print("Accuracy: %0.1f" % evl.percent_correct)
+print(evl.matrix())
 
 # cross-validate CostSensitiveClassifier with J48
 classifier = "weka.classifiers.meta.CostSensitiveClassifier"
@@ -65,7 +64,7 @@ cls = Classifier(classname=classifier, options=["-W", "weka.classifiers.trees.J4
 evl = Evaluation(data)
 evl.crossvalidate_model(cls, data, 10, Random(1))
 print("--> %s using J48" % classifier)
-print("Accuracy: %0.1f" % evl.percent_correct())
-print(evl.to_matrix())
+print("Accuracy: %0.1f" % evl.percent_correct)
+print(evl.matrix())
 
 jvm.stop()
